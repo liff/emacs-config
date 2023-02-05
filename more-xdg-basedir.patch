@@ -1,0 +1,334 @@
+From 00d8c131a71f119d23c37672dd31c52aee710647 Mon Sep 17 00:00:00 2001
+From: Olli Helenius <liff@iki.fi>
+Date: Sun, 22 Jan 2023 14:35:20 +0200
+Subject: [PATCH 1/4] Use `user-emacs-directory` in comments
+
+---
+ lisp/cedet/semantic/db-file.el | 2 +-
+ lisp/cmuscheme.el              | 2 +-
+ lisp/emacs-lisp/package.el     | 2 +-
+ lisp/files.el                  | 2 +-
+ lisp/ldefs-boot.el             | 4 ++--
+ lisp/org/org-mobile.el         | 2 +-
+ lisp/plstore.el                | 8 ++++----
+ lisp/savehist.el               | 2 +-
+ lisp/shadowfile.el             | 4 ++--
+ lisp/shell.el                  | 2 +-
+ 10 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/lisp/cedet/semantic/db-file.el b/lisp/cedet/semantic/db-file.el
+index 11c3cb7c55f..e63e9915e03 100644
+--- a/lisp/cedet/semantic/db-file.el
++++ b/lisp/cedet/semantic/db-file.el
+@@ -44,7 +44,7 @@
+ (defcustom semanticdb-default-save-directory
+   (locate-user-emacs-file "semanticdb" ".semanticdb")
+   "Directory name where semantic cache files are stored.
+-By default, it is either ~/.emacs.d/semanticdb, or ~/.semanticdb depending
++By default, it is either <user-emacs-directory>/semanticdb, or ~/.semanticdb depending
+ on which exists.
+ If this value is nil, files are saved in the current directory.  If the value
+ is a valid directory, then it overrides `semanticdb-default-file-name' and
+diff --git a/lisp/cmuscheme.el b/lisp/cmuscheme.el
+index b3b8ae87ee3..0b036094404 100644
+--- a/lisp/cmuscheme.el
++++ b/lisp/cmuscheme.el
+@@ -220,7 +220,7 @@ Defaults to a regexp ignoring all inputs of 0, 1, or 2 letters."
+ If there is a process already running in `*scheme*', switch to that buffer.
+ With argument, allows you to edit the command line (default is value
+ of `scheme-program-name').
+-If the file `~/.emacs_SCHEMENAME' or `~/.emacs.d/init_SCHEMENAME.scm' exists,
++If the file `~/.emacs_SCHEMENAME' or `<user-emacs-directory>/init_SCHEMENAME.scm' exists,
+ it is given as initial input.
+ Note that this may lose due to a timing error if the Scheme processor
+ discards input when it starts up.
+diff --git a/lisp/emacs-lisp/package.el b/lisp/emacs-lisp/package.el
+index 09917cd29b1..42153054c60 100644
+--- a/lisp/emacs-lisp/package.el
++++ b/lisp/emacs-lisp/package.el
+@@ -60,7 +60,7 @@
+ ;;
+ ;; * Download.  Fetching the package from ELPA.
+ ;; * Install.  Untar the package, or write the .el file, into
+-;;   ~/.emacs.d/elpa/ directory.
++;;   `<user-emacs-directory>/elpa/` directory.
+ ;; * Autoload generation.
+ ;; * Byte compile.  Currently this phase is done during install,
+ ;;   but we may change this.
+diff --git a/lisp/files.el b/lisp/files.el
+index 9da82446112..5a3f09ae489 100644
+--- a/lisp/files.el
++++ b/lisp/files.el
+@@ -5005,7 +5005,7 @@ BACKUPNAME is the backup file name, which is the old file renamed."
+ 		    (dolist (old-version old-versions)
+ 		      (delete-file old-version)))
+ 		(file-error nil))
+-	      ;; If trouble writing the backup, write it in .emacs.d/%backup%.
++	      ;; If trouble writing the backup, write it in <user-emacs-directory>/%backup%.
+ 	      (when (not buffer-backed-up)
+ 		(setq backupname (locate-user-emacs-file "%backup%~"))
+ 		(message "Cannot write backup file; backing up in %s"
+diff --git a/lisp/ldefs-boot.el b/lisp/ldefs-boot.el
+index 4d5921582cc..e8010cd3357 100644
+--- a/lisp/ldefs-boot.el
++++ b/lisp/ldefs-boot.el
+@@ -4667,7 +4667,7 @@ Run an inferior Scheme process, input and output via buffer `*scheme*'.
+ If there is a process already running in `*scheme*', switch to that buffer.
+ With argument, allows you to edit the command line (default is value
+ of `scheme-program-name').
+-If the file `~/.emacs_SCHEMENAME' or `~/.emacs.d/init_SCHEMENAME.scm' exists,
++If the file `~/.emacs_SCHEMENAME' or `<user-emacs-directory>/init_SCHEMENAME.scm' exists,
+ it is given as initial input.
+ Note that this may lose due to a timing error if the Scheme processor
+ discards input when it starts up.
+@@ -28595,7 +28595,7 @@ Program used comes from variable `explicit-shell-file-name',
+  or (if that is nil) from `shell-file-name'.
+ Non-interactively, it can also be specified via the FILE-NAME arg.
+ 
+-If a file `~/.emacs_SHELLNAME' exists, or `~/.emacs.d/init_SHELLNAME.sh',
++If a file `~/.emacs_SHELLNAME' exists, or `<user-emacs-directory>/init_SHELLNAME.sh',
+ it is given as initial input (but this may be lost, due to a timing
+ error, if the shell discards input when it starts up).
+ The buffer is put in Shell mode, giving commands for sending input
+diff --git a/lisp/org/org-mobile.el b/lisp/org/org-mobile.el
+index 01395a4b616..5d6dbe6fb7d 100644
+--- a/lisp/org/org-mobile.el
++++ b/lisp/org/org-mobile.el
+@@ -121,7 +121,7 @@ Note that, when Org runs the encryption commands, the password could
+ be visible briefly on your system with the `ps' command.  So this method is
+ only intended to keep the files secure on the server, not on your own machine.
+ 
+-Also, if you set this variable in an init file (.emacs or .emacs.d/init.el
++Also, if you set this variable in an init file (.emacs or <user-emacs-directory>/init.el
+ or custom.el...) and if that file is stored in a way so that other can read
+ it, this also limits the security of this approach.  You can also leave
+ this variable empty - Org will then ask for the password once per Emacs
+diff --git a/lisp/plstore.el b/lisp/plstore.el
+index 0276a752a0f..70e21a09fc6 100644
+--- a/lisp/plstore.el
++++ b/lisp/plstore.el
+@@ -26,8 +26,8 @@
+ ;;
+ ;; Creating:
+ ;;
+-;; ;; Open a new store associated with ~/.emacs.d/auth.plist.
+-;; (setq store (plstore-open (expand-file-name "~/.emacs.d/auth.plist")))
++;; ;; Open a new store associated with <user-emacs-directory>/auth.plist.
++;; (setq store (plstore-open (locate-user-emacs-file "auth.plist")))
+ ;; ;; Both `:host' and `:port' are public property.
+ ;; (plstore-put store "foo" '(:host "foo.example.org" :port 80) nil)
+ ;; ;; No encryption will be needed.
+@@ -40,12 +40,12 @@
+ ;; ;; Those secret properties are encrypted together.
+ ;; (plstore-save store)
+ ;;
+-;; ;; Kill the buffer visiting ~/.emacs.d/auth.plist.
++;; ;; Kill the buffer visiting <user-emacs-directory>/auth.plist.
+ ;; (plstore-close store)
+ ;;
+ ;; Searching:
+ ;;
+-;; (setq store (plstore-open (expand-file-name "~/.emacs.d/auth.plist")))
++;; (setq store (plstore-open (locate-user-emacs-file "auth.plist")))
+ ;;
+ ;; ;; As the entry "foo" associated with "foo.example.org" has no
+ ;; ;; secret properties, no need to decryption.
+diff --git a/lisp/savehist.el b/lisp/savehist.el
+index b532668f8a4..c22a011762c 100644
+--- a/lisp/savehist.el
++++ b/lisp/savehist.el
+@@ -27,7 +27,7 @@
+ ;; Many editors (e.g. Vim) have the feature of saving minibuffer
+ ;; history to an external file after exit.  This package provides the
+ ;; same feature in Emacs.  When set up, it saves recorded minibuffer
+-;; histories to a file (`~/.emacs.d/history' by default).  Additional
++;; histories to a file (`<user-emacs-directory>/history' by default).  Additional
+ ;; variables may be specified by customizing
+ ;; `savehist-additional-variables'.
+ 
+diff --git a/lisp/shadowfile.el b/lisp/shadowfile.el
+index 33340a371f1..c77056b655c 100644
+--- a/lisp/shadowfile.el
++++ b/lisp/shadowfile.el
+@@ -105,7 +105,7 @@ files that have been changed and need to be copied to other systems."
+ (defcustom shadow-info-file (locate-user-emacs-file "shadows" ".shadows")
+   "File to keep shadow information in.
+ The `shadow-info-file' should be shadowed to all your accounts to
+-ensure consistency.  Default: ~/.emacs.d/shadows"
++ensure consistency.  Default: <user-emacs-directory>/shadows"
+   :type 'file
+   :version "26.2")
+ 
+@@ -116,7 +116,7 @@ This means that if a remote system is down, or for any reason you cannot or
+ decide not to copy your shadow files at the end of one Emacs session, it will
+ remember and ask you again in your next Emacs session.
+ This file must NOT be shadowed to any other system, it is host-specific.
+-Default: ~/.emacs.d/shadow_todo"
++Default: <user-emacs-directory>/shadow_todo"
+   :type 'file
+   :version "26.2")
+ 
+diff --git a/lisp/shell.el b/lisp/shell.el
+index 5cf108bfa3b..069616f7052 100644
+--- a/lisp/shell.el
++++ b/lisp/shell.el
+@@ -802,7 +802,7 @@ Program used comes from variable `explicit-shell-file-name',
+  or (if that is nil) from `shell-file-name'.
+ Non-interactively, it can also be specified via the FILE-NAME arg.
+ 
+-If a file `~/.emacs_SHELLNAME' exists, or `~/.emacs.d/init_SHELLNAME.sh',
++If a file `~/.emacs_SHELLNAME' exists, or `<user-emacs-directory>/init_SHELLNAME.sh',
+ it is given as initial input (but this may be lost, due to a timing
+ error, if the shell discards input when it starts up).
+ The buffer is put in Shell mode, giving commands for sending input
+-- 
+2.39.0
+
+
+From 871a553eb04ccaf56ebefed16418e83e5d4694e7 Mon Sep 17 00:00:00 2001
+From: Olli Helenius <liff@iki.fi>
+Date: Sun, 22 Jan 2023 14:35:50 +0200
+Subject: [PATCH 2/4] Search for custom gtkrc in `XDG_CONFIG_HOME`
+
+---
+ src/xterm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/xterm.c b/src/xterm.c
+index 1325d923be9..cb4cae14ed1 100644
+--- a/src/xterm.c
++++ b/src/xterm.c
+@@ -29958,7 +29958,12 @@ x_term_init (Lisp_Object display_name, char *xrm_option, char *resource_name)
+ #ifndef HAVE_GTK3
+         /* Load our own gtkrc if it exists.  */
+         {
+-          const char *file = "~/.emacs.d/gtkrc";
++          char file[PATH_MAX];
++          const char *xdg_config_home = getenv ("XDG_CONFIG_HOME");
++          if (xdg_config_home)
++            snprintf(file, sizeof(file), "%s/emacs/gtkrc", xdg_config_home);
++          else
++            snprintf(file, sizeof(file), "~/.emacs.d/gtkrc");
+           Lisp_Object s, abs_file;
+ 
+           s = build_string (file);
+-- 
+2.39.0
+
+
+From 0eca972455771e705ada1e54010a7e5ccad48a4b Mon Sep 17 00:00:00 2001
+From: Olli Helenius <liff@iki.fi>
+Date: Sun, 22 Jan 2023 14:36:18 +0200
+Subject: [PATCH 3/4] Prefer XDG config directory to `~/.emacs.d`
+
+---
+ lisp/startup.el | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/lisp/startup.el b/lisp/startup.el
+index fa84985580e..816f28f40ad 100644
+--- a/lisp/startup.el
++++ b/lisp/startup.el
+@@ -516,9 +516,7 @@ DIRS are relative."
+                                        "/_emacs"
+                                      "/.emacs")))))
+       emacs-d-dir)
+-     ((file-exists-p xdg-dir)
+-      xdg-dir)
+-     (t emacs-d-dir))))
++     (t xdg-dir))))
+ 
+ (defvar comp--compilable)
+ (defvar comp--delayed-sources)
+-- 
+2.39.0
+
+
+From 44e5bd6d2f89e7df71103869eed0068549c8dbcc Mon Sep 17 00:00:00 2001
+From: Olli Helenius <liff@iki.fi>
+Date: Sun, 22 Jan 2023 14:37:11 +0200
+Subject: [PATCH 4/4] Add `user-cache-directory` and `user-state-directory`
+
+---
+ lisp/startup.el | 20 ++++++++++++++++++--
+ lisp/subr.el    | 10 ++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
+
+diff --git a/lisp/startup.el b/lisp/startup.el
+index 816f28f40ad..f5a19818db6 100644
+--- a/lisp/startup.el
++++ b/lisp/startup.el
+@@ -493,6 +493,8 @@ DIRS are relative."
+ 
+ ;; The default location for XDG-convention Emacs init files.
+ (defconst startup--xdg-config-default "~/.config/emacs/")
++(defconst startup--xdg-cache-default "~/.cache/emacs/")
++(defconst startup--xdg-state-default "~/.local/state/emacs/")
+ ;; The location for XDG-convention Emacs init files.
+ (defvar startup--xdg-config-home-emacs)
+ 
+@@ -560,7 +562,7 @@ the updated value."
+   (setq native-comp-eln-load-path (cdr native-comp-eln-load-path))
+   ;; Add the new eln-cache.
+   (push (expand-file-name (file-name-as-directory cache-directory)
+-                          user-emacs-directory)
++                          user-cache-directory)
+         native-comp-eln-load-path))
+ 
+ (defun startup--update-eln-cache ()
+@@ -590,8 +592,22 @@ It is the default value of the variable `top-level'."
+ 	    (if xdg-config-home
+ 		(concat xdg-config-home "/emacs/")
+ 	      startup--xdg-config-default)))
++    (setq startup--xdg-cache-home-emacs
++	  (let ((xdg-cache-home (getenv-internal "XDG_CACHE_HOME")))
++	    (if xdg-cache-home
++		(concat xdg-cache-home "/emacs/")
++	      startup--xdg-cache-default)))
++    (setq startup--xdg-state-home-emacs
++	  (let ((xdg-state-home (getenv-internal "XDG_STATE_HOME")))
++	    (if xdg-state-home
++		(concat xdg-state-home "/emacs/")
++	      startup--xdg-state-default)))
+     (setq user-emacs-directory
+ 	  (startup--xdg-or-homedot startup--xdg-config-home-emacs nil))
++    (setq user-cache-directory
++	  (startup--xdg-or-homedot startup--xdg-cache-home-emacs nil))
++    (setq user-state-directory
++	  (startup--xdg-or-homedot startup--xdg-state-home-emacs nil))
+ 
+     (when (featurep 'native-compile)
+       (unless (native-comp-available-p)
+@@ -608,7 +624,7 @@ It is the default value of the variable `top-level'."
+           (dolist (path (split-string path-env path-separator))
+             (unless (string= "" path)
+               (push path native-comp-eln-load-path)))))
+-      (push (expand-file-name "eln-cache/" user-emacs-directory)
++      (push (expand-file-name "eln-cache/" user-cache-directory)
+             native-comp-eln-load-path))
+ 
+     ;; Look in each dir in load-path for a subdirs.el file.  If we
+diff --git a/lisp/subr.el b/lisp/subr.el
+index f909b63aabe..28e98fce70e 100644
+--- a/lisp/subr.el
++++ b/lisp/subr.el
+@@ -3954,6 +3954,16 @@ mode.")
+ Various programs in Emacs store information in this directory.
+ Note that this should end with a directory separator.
+ See also `locate-user-emacs-file'.")
++
++(defvar user-cache-directory
++  ;; The value does not matter since Emacs sets this at startup.
++  nil
++  "Directory for Emacs cache files.")
++
++(defvar user-state-directory
++  ;; The value does not matter since Emacs sets this at startup.
++  nil
++  "Directory for Emacs state files.")
+ 
+ ;;;; Misc. useful functions.
+ 
+-- 
+2.39.0
+
