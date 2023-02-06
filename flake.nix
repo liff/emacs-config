@@ -187,11 +187,9 @@
 
       in {
         packages = {
-          emacs = emacsWithPackages;
           default = emacsWithPackages;
         };
         apps = {
-          emacs = app;
           default = app;
         };
       });
