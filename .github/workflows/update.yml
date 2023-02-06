@@ -1,0 +1,28 @@
+name: Update flake inputs
+
+on:
+  schedule:
+    - cron: '45 */8 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-inputs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: cachix/install-nix-action@v18
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - run: nix flake update
+
+      - name: Commit changes, if any
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'data'
+          author_name: github-actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: 'Automatic flake input update'
