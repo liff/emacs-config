@@ -4,6 +4,9 @@
 (require 'cl-lib)
 (require 'simple)
 (require 'keymap)
+(require 'dbus)
+(require 'crux)
+(require 'better-jumper)
 
 (defun ollijh/keymap-set-all (map bindings)
   "Add all BINDINGS to MAP."
@@ -112,10 +115,9 @@ Return `none', `light' or `dark'."
 	 (funcall handler (ollijh/appearance-name (car value)))))))
 
 (defun ollijh/choose-theme-from-appearance (appearance)
-  (message "%s" appearance)
   (let* ((theme (pcase appearance
-		  ('none 'adwaita)
-		  ('light 'adwaita)
+		  ('none 'modus-operandi)
+		  ('light 'modus-operandi)
 		  ('dark 'twilight-anti-bright)))
 	 (themes (list theme)))
     (custom-set-variables
@@ -125,5 +127,28 @@ Return `none', `light' or `dark'."
   (interactive (list (project-prompt-project-dir)))
   (let ((project-current-directory-override dir))
     (call-interactively 'project-vc-dir)))
+
+(defun ollijh/set-jump-if-moved (oldfun &rest args)
+  (let ((old-pos (point)))
+    (apply oldfun args)
+    (unless (equal (point) old-pos)
+      (message "set-jump-if-moved %S" old-pos)
+      (better-jumper-set-jump old-pos))))
+
+(defun ollijh/set-jump-maybe (fn &rest args)
+  "Set a jump point if fn actually moves the point. Stolen from Doom."
+  (let ((origin (point-marker))
+        (result (let* ((better-jumper--jumping t))
+		  (apply fn args)))
+        (dest (point-marker)))
+    (unless (equal origin dest)
+      (with-current-buffer (marker-buffer origin)
+        (better-jumper-set-jump
+         (if (markerp (car args))
+	     (car args)
+	   origin))))
+    (set-marker origin nil)
+    (set-marker dest nil)
+    result))
 
 (provide 'ollijh)

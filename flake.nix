@@ -39,6 +39,7 @@
           "xref"
           "xwidget"
           "dbus"
+          "ansi-color"
           "savehist"
           "saveplace"
           "hl-line"
@@ -48,6 +49,8 @@
           "flyspell"
           "flyspell-correct"
           "apropos"
+          "multisession"
+          "emoji"
           "url-cache"
           "eldoc"
           "project"
@@ -58,6 +61,7 @@
           "shortdoc"
           "doc-view"
           "vc"
+          "compile"
           "prog-mode"
           "lisp-mode"
           "edebug"
@@ -75,7 +79,7 @@
           "js"
           "flymake"
           "flyspell"
-          "eglot"
+          "eglot" # TODO: textDocument/selectionRange
         ];
         usedPackages = [
           # Early and/or essential
@@ -92,6 +96,7 @@
           "envrc"
           "crux"
           "move-dup"
+          "better-jumper"
           "helpful"
           "corfu"
           "consult"
@@ -100,6 +105,10 @@
           "orderless"
           "marginalia"
           "dired-sidebar"
+          "with-editor"
+
+          # Version control
+          "magit"
 
           # Prose
           "flyspell-correct"
@@ -116,9 +125,12 @@
 
           # Programming Languages and File Formats
           "nix-mode"
+          "hcl-mode"
+          "terraform-mode"
 
           # Themes
           "twilight-anti-bright-theme"
+          "modus-themes"
         ];
 
         requireSexp = pkg: "(require '${pkg})";
@@ -138,6 +150,7 @@
             pname = "ollijh";
             version = "1";
             src = ./lisp;
+            buildInputs = with epkgs; [ crux better-jumper ];
           };
 
         nixDependencies = with pkgs; ''
@@ -162,6 +175,7 @@
           (setq edebug-inhibit-emacs-lisp-mode-bindings t)
           ${bundled}
 
+          (setq magit-define-global-key-bindings nil)
           ${installed}
           (require 'ollijh)
 
