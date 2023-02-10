@@ -93,6 +93,7 @@
           "transient"
           "ws-butler"
           "editorconfig"
+          "avy"
           "envrc"
           "crux"
           "move-dup"
@@ -122,6 +123,7 @@
           }
           "rainbow-delimiters"
           "expand-region"
+          "combobulate"
 
           # Programming Languages and File Formats
           "nix-mode"

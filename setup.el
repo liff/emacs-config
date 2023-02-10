@@ -165,6 +165,8 @@
 (add-to-list 'editorconfig-indentation-alist '(c-ts-mode c-basic-offset c-ts-mode-indent-offset))
 (editorconfig-mode 1)
 
+;;; avy
+
 ;;; better-jumper
 ;; +++
 ;; *** New command 'xref-go-forward'.
