@@ -123,7 +123,7 @@
           }
           "rainbow-delimiters"
           "expand-region"
-          "combobulate"
+          #"combobulate"
 
           # Programming Languages and File Formats
           "nix-mode"
