@@ -13,14 +13,26 @@
   outputs = { self, nixpkgs, flake-utils, emacs-overlay }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        inherit (builtins) concatStringsSep getAttr map isString readFile;
+        inherit (builtins) concatStringsSep filter getAttr map isString readFile;
         pkgs = import nixpkgs { inherit system; };
-        inherit (pkgs) runCommand writeText;
+        inherit (pkgs) fetchpatch runCommand writeText;
 
         emacs = emacs-overlay.packages.${system}.emacsPgtk.overrideAttrs
           (prev: {
-            patches = (prev.patches or [ ]) ++ [ ./more-xdg-basedir.patch ];
+            patches = (prev.patches or [ ]) ++ [
+              (fetchpatch {
+                name = "xdg-plus.patch";
+                url = "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
+                hash = "sha256-h4bTYBujqQmSE9zcNWMWJ5rZGH9TRLupcrPCYnZJj+8=";
+              })
+              (fetchpatch {
+                name = "eglot-expand-region.patch";
+                url = "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
+                hash = "sha256-rxRiuIUKgMmzuzYgF2IjHFR5q/euYgUQHWRX9EhXBQg=";
+              })
+            ];
           });
+
         bundledRequires = [
           "simple"
           "minibuffer"
@@ -30,6 +42,7 @@
           "jit-lock"
           "delsel"
           "paren"
+          "replace"
           "uniquify"
           "tool-bar"
           "menu-bar"
@@ -58,6 +71,7 @@
           "tramp"
           "eshell"
           "outline"
+          "text-mode"
           "shortdoc"
           "doc-view"
           "vc"
@@ -79,7 +93,7 @@
           "js"
           "flymake"
           "flyspell"
-          "eglot" # TODO: textDocument/selectionRange
+          "eglot"
         ];
         usedPackages = [
           # Early and/or essential
@@ -105,6 +119,8 @@
           "vertico"
           "orderless"
           "marginalia"
+          "embark"
+          "embark-consult"
           "dired-sidebar"
           "with-editor"
 
@@ -124,11 +140,15 @@
           "rainbow-delimiters"
           "expand-region"
           #"combobulate"
+          "consult-eglot"
 
           # Programming Languages and File Formats
           "nix-mode"
           "hcl-mode"
           "terraform-mode"
+          #"protobuf-ts-mode"
+          "haskell-mode"
+          "kotlin-mode" # TODO: replace with kotlin-ts-mode
 
           # Themes
           "twilight-anti-bright-theme"
@@ -192,7 +212,21 @@
           cp ${defaultEl} $out/share/emacs/site-lisp/default.el
         '';
 
-        emacsWithPackages = (pkgs.emacsPackagesFor emacs).withPackages (epkgs:
+        noEglot = inputs: filter (p: !(p ? pname) || p.pname != "eglot") inputs;
+
+        epkgOverrides = final: prev: {
+          consult-eglot = prev.consult-eglot.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.gnused ];
+            postPatch = (old.postPatch or "") + ''
+              sed -ri 's/Package-Requires: (.*) \(eglot "[^"]+"\)/Package-Requires: \1/' consult-eglot.el
+            '';
+            buildInputs = noEglot (old.buildInputs or []);
+            propagatedBuildInputs = noEglot (old.propagatedBuildInputs or []);
+            propagatedUserEnvPkgs = noEglot (old.propagatedUserEnvPkgs or []);
+          });
+        };
+
+        emacsWithPackages = ((pkgs.emacsPackagesFor emacs).overrideScope' epkgOverrides).withPackages (epkgs:
           [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
           ++ map (use: toEpkg use epkgs) usedPackages);
 

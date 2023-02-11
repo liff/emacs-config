@@ -151,4 +151,23 @@ Return `none', `light' or `dark'."
     (set-marker dest nil)
     result))
 
+
+(defun ollijh/wrap-round-on-round ()
+  (interactive)
+  (if (eq (following-char) ?\()
+    (sp-wrap-round)
+    (self-insert-command 1)))
+
+(defun ollijh/wrap-curly-on-curly ()
+  (interactive)
+  (if (eq (following-char) ?{)
+    (sp-wrap-curly)
+    (self-insert-command 1)))
+
+(defun ollijh/wrap-square-on-square ()
+  (interactive)
+  (if (eq (following-char) ?\[)
+    (sp-wrap-square)
+    (self-insert-command 1)))
+
 (provide 'ollijh)

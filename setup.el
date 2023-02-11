@@ -54,6 +54,12 @@
 (custom-set-variables  '(tab-always-indent 'complete))
 ;;; paren
 (custom-set-variables '(show-paren-context-when-offscreen 'overlay))
+;;; replace
+(ollijh/keymap-rewrite occur-edit-mode-map
+                       :unset '("C-o" "C-c")
+                       :set '(("C-<return>" . occur-cease-edit)
+                              ("M-g M-o" . occur-mode-display-occurrence)
+                              ("C-'" . next-error-follow-minor-mode)))
 ;;; uniquify
 (custom-set-variables  '(uniquify-buffer-name-style 'forward))
 ;;; tool-bar
@@ -90,6 +96,9 @@
 (custom-set-variables '(tramp-default-method 'ssh))
 ;;; eshell
 (custom-set-variables '(eshell-directory-name (f-join user-state-directory "eshell/")))
+;;; text-mode
+(ollijh/keymap-rewrite text-mode-map
+                       :unset '("ESC"))
 ;;; autorevert
 (global-auto-revert-mode 1)
 ;;; treesit
@@ -220,6 +229,12 @@
 ;;; marginalia
 (marginalia-mode 1)
 
+;;; embark
+
+;;; embark-consult
+(add-hook 'embark-collect-mode-hook 'consult-preview-at-point-mode) ; TODO: is this useful?
+(add-hook 'embark-collect-mode-hook (lambda () (setq-local show-trailing-whitespace nil)))
+
 ;;; dired-sidebar
 
 ;;; with-editor
@@ -253,6 +268,10 @@
 
 ;;; smartparens
 (add-hook 'prog-mode-hook #'smartparens-mode)
+(ollijh/keymap-rewrite smartparens-mode-map
+		       :set '(("(" . ollijh/wrap-round-on-round)
+			      ("{" . ollijh/wrap-curly-on-curly)
+			      ("[" . ollijh/wrap-square-on-square)))
 
 ;;; mermaid-mode
 (custom-set-variables
@@ -260,6 +279,11 @@
 
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;;; expand-region
+(add-to-list 'er/try-expand-list 'eglot-expand-region)
+
+;;; consult-eglot
 
 ;;; nix-mode
 (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
@@ -282,6 +306,19 @@
 (add-hook 'terraform-mode-hook (lambda () (setq-local compile-command "terraform plan")))
 (ollijh/keymap-rewrite terraform-mode-map
                        :set '(("M-o M-o" . terraform-format-buffer)))
+
+;;; kotlin-ts-mode
+
+;;; haskell-mode
+(add-hook 'haskell-mode-hook #'eglot-ensure)
+(ollijh/keymap-rewrite haskell-mode-map
+                       :unset '("C-c"))
+
+;;; kotlin-mode
+(add-hook 'kotlin-mode-hook #'eglot-ensure)
+(add-hook 'kotlin-mode-hook (lambda () (setq-local compile-command "gradle build")))
+(ollijh/keymap-rewrite kotlin-mode-map
+                       :unset '("C-c"))
 
 ;;; twilight-anti-bright
 (load-theme 'twilight-anti-bright t t)
@@ -391,6 +428,7 @@
                          ("M-g M-g" . xref-find-definitions)
                          ("M-g M-u" . xref-find-references)
                          ("M-g M-w" . browse-at-remote)
+                         ("M-g M-s" . consult-eglot-symbols)
 
                          ;; Windows/frames
                          ("<f11>" . toggle-frame-fullscreen)
@@ -408,6 +446,7 @@
                          ;; Tools
                          ("M-<home>" . dired-sidebar-toggle-sidebar)
                          ("C-." . emoji-insert)
+                         ("M-'" . embark-act)
 
                          ;; Documentation
                          ("<f1>" . helpful-at-point)
