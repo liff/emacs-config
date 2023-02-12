@@ -46,7 +46,6 @@
           "uniquify"
           "tool-bar"
           "menu-bar"
-          "minibuffer"
           "recentf"
           "auth-source"
           "xref"
@@ -93,6 +92,7 @@
           "js"
           "flymake"
           "flyspell"
+          "winner"
           "eglot"
         ];
         usedPackages = [
@@ -105,6 +105,10 @@
           # Tools
           "gsettings"
           "transient"
+          {
+            name = "popper";
+            require = [ "popper" "popper-echo" ];
+          }
           "ws-butler"
           "editorconfig"
           "avy"

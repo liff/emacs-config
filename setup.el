@@ -132,6 +132,11 @@
  '(doc-view-ghostscript-program (f-join nixpkgs/ghostscript "bin/gs"))
  '(doc-view-ps2pdf-program (f-join nixpkgs/ghostscript "bin/ps2pdf")))
 ;;; compile
+(ollijh/keymap-rewrite compilation-mode-map
+                       :unset '("C-c" "ESC" "TAB" "<backtab>")
+                       :set '(("<escape>" . quit-window)
+			      ("C-<down>" . compilation-next-error)
+			      ("C-<up>" . compilation-previous-error)))
 (add-hook 'compilation-filter-hook (lambda () (let ((inhibit-read-only t)) (ansi-color-apply-on-region compilation-filter-start (point)))))
 (add-hook 'compilation-mode-hook (lambda () (setq-local show-trailing-whitespace nil)))
 ;;; prog-mode
@@ -156,6 +161,12 @@
 ;;; conf-mode
 (ollijh/keymap-rewrite conf-mode-map
                        :unset '("C-c"))
+;;; winner-mode
+(ollijh/keymap-rewrite winner-mode-map
+                       :unset '("C-c")
+		       :set '(("M-. M-z" . winner-undo)
+			      ("M-. M-y" . winner-redo)))
+(winner-mode 1)
 
 ;;; gsettings
 (when (gsettings-available?)
@@ -164,6 +175,18 @@
 ;;; transient
 (custom-set-variables
  '(transient-history-file (f-join user-state-directory "transient/history.el")))
+
+;;; popper
+(custom-set-variables
+ '(popper-group-function #'popper-group-by-project)
+ ;;'(popper-display-function #'display-buffer-in-child-frame)
+ '(popper-reference-buffers '("\\*Messages\\*$"
+			      "\\*Warnings\\*$"
+			      help-mode
+			      helpful-mode
+			      compilation-mode)))
+(popper-mode 1)
+(popper-echo-mode 1)
 
 ;;; ws-butler
 (add-hook 'prog-mode-hook #'ws-butler-mode)
@@ -442,6 +465,7 @@
                          ("M-. M-<down>" . split-window-below)
                          ("M-. M-<right>" . split-window-right)
                          ("M-. M-<delete>" . delete-window)
+			 ("C-`" . popper-toggle-latest)
 
                          ;; Tools
                          ("M-<home>" . dired-sidebar-toggle-sidebar)
