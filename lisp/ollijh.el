@@ -118,7 +118,7 @@ Return `none', `light' or `dark'."
   (let* ((theme (pcase appearance
 		  ('none 'modus-operandi)
 		  ('light 'modus-operandi)
-		  ('dark 'twilight-anti-bright)))
+		  ('dark 'modus-vivendi)))
 	 (themes (list theme)))
     (custom-set-variables
      `(custom-enabled-themes (quote (,theme))))))
