@@ -79,6 +79,7 @@
           "lisp-mode"
           "edebug"
           "elisp-mode"
+          "sql"
           "cc-mode"
           "c-ts-mode"
           "cmake-ts-mode"
@@ -100,11 +101,14 @@
           "dash"
           "s"
           "f"
+          "emacsql"
+          "emacsql-sqlite-builtin"
           "diminish"
 
           # Tools
           "gsettings"
           "transient"
+          "windsize"
           {
             name = "popper";
             require = [ "popper" "popper-echo" ];
@@ -125,16 +129,24 @@
           "marginalia"
           "embark"
           "embark-consult"
-          "dired-sidebar"
           "with-editor"
 
           # Version control
           "magit"
+          "forge"
+
+          # File and project management
+          "treemacs"
+          "treemacs-all-the-icons"
+          "treemacs-icons-dired"
+          "treemacs-magit"
 
           # Prose
           "flyspell-correct"
           "plantuml-mode"
           "mermaid-mode"
+          "markdown-mode"
+          "gh-md"
 
           # Programming Assistance
           {
@@ -157,6 +169,8 @@
           # Themes
           "twilight-anti-bright-theme"
           "modus-themes"
+          "nano-theme"
+          "ef-themes"
         ];
 
         requireSexp = pkg: "(require '${pkg})";
@@ -186,6 +200,8 @@
           (defconst nixpkgs/openjdk "${openjdk}")
           (defconst nixpkgs/plantuml "${plantuml}")
           (defconst nixpkgs/mermaid-cli "${nodePackages.mermaid-cli}")
+          (defconst nixpkgs/python3 "${python3}")
+          (defconst nixpkgs/sqlite "${sqlite}")
         '';
 
         defaultEl = let
@@ -202,6 +218,7 @@
           ${bundled}
 
           (setq magit-define-global-key-bindings nil)
+          (setq forge-database-connector 'sqlite-builtin)
           ${installed}
           (require 'ollijh)
 
@@ -216,7 +233,9 @@
           cp ${defaultEl} $out/share/emacs/site-lisp/default.el
         '';
 
-        noEglot = inputs: filter (p: !(p ? pname) || p.pname != "eglot") inputs;
+        removePkg = name: inputs: filter (p: !(p ? pname) || p.pname != name) inputs;
+
+        noEglot = removePkg "eglot";
 
         epkgOverrides = final: prev: {
           consult-eglot = prev.consult-eglot.overrideAttrs (old: {
