@@ -153,7 +153,7 @@
                        :unset '("C-j" "C-M-i" "C-M-q" "C-M-x" "C-c" "ESC"))
 ;;; elisp-mode
 (ollijh/keymap-rewrite emacs-lisp-mode-map
-                       :unset '("C-j" "C-M-i" "C-M-q" "C-M-x" "C-c"))
+                       :unset '("C-j" "C-M-i" "C-M-q" "C-M-x" "C-c" "ESC"))
 ;;; sql
 (ollijh/keymap-rewrite sql-mode-map
 		       :unset '("C-c")
@@ -161,6 +161,8 @@
 (add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
 (add-hook 'sql-mode-hook #'eglot-ensure)
 ;;; c-ts-mode
+(ollijh/keymap-rewrite c-ts-base-mode-map
+                       :unset '("C-c"))
 (add-hook 'c-ts-mode-hook #'eglot-ensure)
 (add-to-list 'eglot-server-programs `(c-ts-mode . ,(eglot-alternatives '(("ccls") ("clangd")))))
 ;;; rust-ts-mode
