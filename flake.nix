@@ -14,10 +14,13 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (builtins) concatStringsSep filter getAttr map isString readFile;
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ emacs-overlay.overlays.default ];
+        };
         inherit (pkgs) fetchpatch runCommand writeText;
 
-        emacs = emacs-overlay.packages.${system}.emacsPgtk.overrideAttrs
+        patchedEmacs = pkgs.emacsPgtk.overrideAttrs
           (prev: {
             patches = (prev.patches or [ ]) ++ [
               (fetchpatch {
@@ -249,18 +252,19 @@
           });
         };
 
-        emacsWithPackages = ((pkgs.emacsPackagesFor emacs).overrideScope' epkgOverrides).withPackages (epkgs:
-          [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
-          ++ map (use: toEpkg use epkgs) usedPackages);
+        emacsPackages = (pkgs.emacsPackagesFor patchedEmacs).overrideScope' epkgOverrides;
+        emacsWithPackages = emacsPackages.emacsWithPackages;
+        finalEmacs = emacsWithPackages (epkgs:
+          [ defaultElAsPackage ] ++ [ (ollijh epkgs) ] ++ map (use: toEpkg use epkgs) usedPackages);
 
         app = {
           type = "app";
-          program = "${emacsWithPackages}/bin/emacs";
+          program = "${finalEmacs}/bin/emacs";
         };
 
       in {
         packages = {
-          default = emacsWithPackages;
+          default = finalEmacs;
         };
         apps = {
           default = app;
