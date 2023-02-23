@@ -189,6 +189,9 @@
 (custom-set-variables
  '(transient-history-file (f-join user-state-directory "transient/history.el")))
 
+;;; which-key
+(which-key-mode 1)
+
 ;;; popper
 (custom-set-variables
  '(popper-group-function #'popper-group-by-project)
@@ -350,6 +353,13 @@
 (add-to-list 'er/try-expand-list 'eglot-expand-region)
 
 ;;; consult-eglot
+
+;;; aggressive-indent
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(ollijh/keymap-rewrite aggressive-indent-mode-map :unset '("C-c"))
+
+;;; elisp-autofmt
+(keymap-set emacs-lisp-mode-map "M-o M-o" 'elisp-autofmt-buffer)
 
 ;;; nix-mode
 (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))

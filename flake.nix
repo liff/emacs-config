@@ -111,6 +111,7 @@
           # Tools
           "gsettings"
           "transient"
+          "which-key"
           "windsize"
           {
             name = "popper";
@@ -160,8 +161,10 @@
           "expand-region"
           #"combobulate"
           "consult-eglot"
+          "aggressive-indent"
 
           # Programming Languages and File Formats
+          "elisp-autofmt"
           "nix-mode"
           "hcl-mode"
           "terraform-mode"
