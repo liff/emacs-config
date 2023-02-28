@@ -117,6 +117,7 @@
           # Tools
           "gsettings"
           "transient"
+          "undo-tree"
           "which-key"
           "windsize"
           {
@@ -130,6 +131,7 @@
           "crux"
           "move-dup"
           "better-jumper"
+          "goto-chg" # TODO
           "helpful"
           "corfu"
           "consult"

@@ -147,7 +147,7 @@
                        :set '(("C-M-b" . project-compile)))
 ;;; lisp-mode
 (ollijh/keymap-rewrite lisp-mode-shared-map
-                       :unset '("DEL" "C-M-q")
+                       :unset '("DEL" "C-M-q" "ESC")
                        :set '(("C-<return>" . eval-defun)))
 (ollijh/keymap-rewrite lisp-interaction-mode-map
                        :unset '("C-j" "C-M-i" "C-M-q" "C-M-x" "C-c" "ESC"))
@@ -190,6 +190,16 @@
                        :set '(("<escape>" . transient-quit-one)))
 (custom-set-variables
  '(transient-history-file (f-join user-state-directory "transient/history.el")))
+
+;;; undo-tree
+(ollijh/keymap-rewrite undo-tree-map
+		       :unset '("C-_" "C-/" "C-?" "M-_" "C-x" "ESC")
+		       ;;:set '(([remap undo-redo] 'undo-tree-redo))
+		       )
+(define-key undo-tree-map [remap undo-redo] 'undo-tree-redo)
+(custom-set-variables
+ '(undo-tree-history-directory-alist `(("." . ,(f-join user-cache-directory "undo-tree/")))))
+(global-undo-tree-mode 1)
 
 ;;; which-key
 (which-key-mode 1)
