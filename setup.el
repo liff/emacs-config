@@ -177,6 +177,8 @@
                        :set '(("M-. M-z" . winner-undo)
                               ("M-. M-y" . winner-redo)))
 (winner-mode 1)
+;;; eglot
+(add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
 
 ;;; gsettings
 (when (gsettings-available?)
