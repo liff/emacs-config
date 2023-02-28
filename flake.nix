@@ -13,28 +13,34 @@
   outputs = { self, nixpkgs, flake-utils, emacs-overlay }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        inherit (builtins) concatStringsSep filter getAttr map isString readFile;
+        inherit (builtins)
+          attrValues concatStringsSep filter getAttr map isString readFile;
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ emacs-overlay.overlays.default ];
         };
+        inherit (pkgs.lib) isDerivation;
         inherit (pkgs) fetchpatch runCommand writeText;
 
-        patchedEmacs = pkgs.emacsPgtk.overrideAttrs
-          (prev: {
-            patches = (prev.patches or [ ]) ++ [
-              (fetchpatch {
-                name = "xdg-plus.patch";
-                url = "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
-                hash = "sha256-jBLXwtlaHi91ZsHpCEgpEPHjcarzKka5+P/l33KSOqI=";
-              })
-              (fetchpatch {
-                name = "eglot-expand-region.patch";
-                url = "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
-                hash = "sha256-pi200EJjMsMY+qkWKgApYCbXPXSlol6SPoSabvn5mkY=";
-              })
-            ];
-          });
+        patchedEmacs = (pkgs.emacsPgtk.overrideAttrs (prev: {
+          patches = (prev.patches or [ ]) ++ [
+            (fetchpatch {
+              name = "xdg-plus.patch";
+              url =
+                "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
+              hash = "sha256-jBLXwtlaHi91ZsHpCEgpEPHjcarzKka5+P/l33KSOqI=";
+            })
+            (fetchpatch {
+              name = "eglot-expand-region.patch";
+              url =
+                "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
+              hash = "sha256-pi200EJjMsMY+qkWKgApYCbXPXSlol6SPoSabvn5mkY=";
+            })
+          ];
+        })).override {
+          treeSitterPlugins =
+            filter isDerivation (attrValues pkgs.tree-sitter-grammars);
+        };
 
         bundledRequires = [
           "simple"
@@ -239,26 +245,30 @@
           cp ${defaultEl} $out/share/emacs/site-lisp/default.el
         '';
 
-        removePkg = name: inputs: filter (p: !(p ? pname) || p.pname != name) inputs;
+        removePkg = name: inputs:
+          filter (p: !(p ? pname) || p.pname != name) inputs;
 
         noEglot = removePkg "eglot";
 
         epkgOverrides = final: prev: {
           consult-eglot = prev.consult-eglot.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.gnused ];
+            nativeBuildInputs = (old.nativeBuildInputs or [ ])
+              ++ [ pkgs.gnused ];
             postPatch = (old.postPatch or "") + ''
               sed -ri 's/Package-Requires: (.*) \(eglot "[^"]+"\)/Package-Requires: \1/' consult-eglot.el
             '';
-            buildInputs = noEglot (old.buildInputs or []);
-            propagatedBuildInputs = noEglot (old.propagatedBuildInputs or []);
-            propagatedUserEnvPkgs = noEglot (old.propagatedUserEnvPkgs or []);
+            buildInputs = noEglot (old.buildInputs or [ ]);
+            propagatedBuildInputs = noEglot (old.propagatedBuildInputs or [ ]);
+            propagatedUserEnvPkgs = noEglot (old.propagatedUserEnvPkgs or [ ]);
           });
         };
 
-        emacsPackages = (pkgs.emacsPackagesFor patchedEmacs).overrideScope' epkgOverrides;
+        emacsPackages =
+          (pkgs.emacsPackagesFor patchedEmacs).overrideScope' epkgOverrides;
         emacsWithPackages = emacsPackages.emacsWithPackages;
         finalEmacs = emacsWithPackages (epkgs:
-          [ defaultElAsPackage ] ++ [ (ollijh epkgs) ] ++ map (use: toEpkg use epkgs) usedPackages);
+          [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
+          ++ map (use: toEpkg use epkgs) usedPackages);
 
         app = {
           type = "app";
@@ -266,11 +276,7 @@
         };
 
       in {
-        packages = {
-          default = finalEmacs;
-        };
-        apps = {
-          default = app;
-        };
+        packages = { default = finalEmacs; };
+        apps = { default = app; };
       });
 }

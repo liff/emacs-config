@@ -306,7 +306,9 @@
                        :unset '("C-j" "C-k" "DEL" "?" "S-SPC" "C-?" "M-<down>" "M-<up>" "ESC" "C-c")
                        :set '(("C-<down>" . treemacs-next-project)
                               ("C-<up>" . treemacs-previous-project)
-                              ("C-e" . treemacs-select-window)))
+                              ("C-e" . treemacs-select-window)
+			      ("<right>" . ollijh/treemacs-expand-node)
+			      ("<left>" . ollijh/treemacs-collapse-node)))
 (custom-set-variables
  '(treemacs-python-executable (f-join nixpkgs/python3 "bin/python3"))
  '(treemacs-indent-guide-mode t)

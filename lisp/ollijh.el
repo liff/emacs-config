@@ -19,7 +19,7 @@
     (keymap-unset map key t)))
 
 (cl-defun ollijh/keymap-rewrite (map &key (purge nil) (unset '()) (set '()))
-  "Rewrite bindings of MAP. 
+  "Rewrite bindings of MAP.
    If PURGE is set to non-nil, clear the whole keymap.
    Then invoke `ollijh/keymap-unset-all' and `ollijh/keymap-set-all' on the UNSET and SET
    arguments respectively."
@@ -167,5 +167,27 @@ Return `none', `light' or `dark'."
 (defun ollijh/wrap-square-on-square ()
   (interactive)
   (ollijh/wrap-x-on-x ?\[ #'sp-wrap-square))
+
+(defun ollijh/treemacs-expand-node ()
+  "Expand the current node."
+  (interactive)
+  (treemacs-do-for-button-state
+   :on-root-node-closed (treemacs--expand-root-node btn)
+   :on-dir-node-closed  (treemacs--expand-dir-node btn)
+   :on-file-node-closed (treemacs--expand-file-node btn)
+   :on-tag-node-closed  (treemacs--expand-tag-node btn)
+   :on-nil              (treemacs-pulse-on-failure "There is nothing to do here.")
+   :fallback            (lambda ())))
+
+(defun ollijh/treemacs-collapse-node ()
+  "Expand the current node."
+  (interactive)
+  (treemacs-do-for-button-state
+   :on-root-node-open   (treemacs--collapse-root-node btn)
+   :on-dir-node-open    (treemacs--collapse-dir-node btn)
+   :on-file-node-open   (treemacs--collapse-file-node btn)
+   :on-tag-node-open    (treemacs--collapse-tag-node btng)
+   :on-nil              (treemacs-pulse-on-failure "There is nothing to do here.")
+   :fallback            (lambda ())))
 
 (provide 'ollijh)
