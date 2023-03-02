@@ -163,6 +163,9 @@
 ;;; c-ts-mode
 (ollijh/keymap-rewrite c-ts-base-mode-map
                        :unset '("C-c"))
+(custom-set-variables
+ '(c-ts-mode-indent-style 'linux)
+ '(c-ts-mode-indent-offset 8))
 (add-hook 'c-ts-mode-hook #'eglot-ensure)
 (add-to-list 'eglot-server-programs `(c-ts-mode . ,(eglot-alternatives '(("ccls") ("clangd")))))
 ;;; rust-ts-mode
@@ -358,7 +361,10 @@
 (add-hook 'markdown-mode-hook #'eglot-ensure)
 (ollijh/keymap-rewrite markdown-mode-map
                        :unset '("ESC" "C-c" "C-x")
-                       :set '(("C-k" . markdown-insert-link)))
+                       :set '(("C-k" . markdown-insert-link)
+			      ("M-|" . markdown-fill-paragraph)
+			      ("C-<down>" . markdown-forward-block)
+			      ("C-<up>" . markdown-backward-block)))
 
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -556,6 +562,7 @@
                          ("M-. M-<down>" . split-window-below)
                          ("M-. M-<right>" . split-window-right)
                          ("M-. M-<delete>" . delete-window)
+			 ("M-. M-s" . window-swap-states)
                          ("C-`" . popper-toggle-latest)
 
                          ;; Tools
