@@ -77,6 +77,7 @@
           "project"
           "treesit"
           "tramp"
+          "executable"
           "eshell"
           "outline"
           "text-mode"
@@ -142,6 +143,7 @@
           "embark"
           "embark-consult"
           "with-editor"
+          "restclient"
 
           # Version control
           "magit"

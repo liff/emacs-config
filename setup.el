@@ -117,6 +117,8 @@
                             (typescript-mode . typescript-ts-mode))))
 ;;; tramp
 (custom-set-variables '(tramp-default-method 'ssh))
+;;; executable
+(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 ;;; outline
 (ollijh/keymap-rewrite outline-mode-map
                        :purge t
@@ -263,7 +265,11 @@
                               ("C-<up>" . help-goto-previous-page)))
 
 ;;; corfu
-(custom-set-variables '(corfu-auto t))
+(custom-set-variables
+ '(corfu-auto t)
+ '(corfu-popupinfo-mode 1)
+ '(corfu-popupinfo-delay t))
+(eldoc-add-command #'corfu-insert)
 (global-corfu-mode 1)
 
 ;;; consult
@@ -295,6 +301,13 @@
                        :set '(("C-<return>" . with-editor-finish)
                               ("ESC" . with-editor-cancel)))
 
+;;; restclient
+(ollijh/keymap-rewrite restclient-mode-map
+                       :unset '("C-c")
+                       :set '(("C-<return>" . restclient-send-current)
+                              ("C-<up>" . restclient-jump-prev)
+                              ("C-<down>" . restclient-jump-next)))
+
 ;;; magit
 (ollijh/keymap-rewrite magit-section-mode-map
                        :unset '("TAB" "C-<tab>" "M-<tab>" "<backtab>" "p" "n" "M-p" "M-n" "DEL" "S-SPC" "ESC")
@@ -321,7 +334,9 @@
                               ("C-<up>" . treemacs-previous-project)
                               ("C-e" . treemacs-select-window)
 			      ("<right>" . ollijh/treemacs-expand-node)
-			      ("<left>" . ollijh/treemacs-collapse-node)))
+			      ("<left>" . ollijh/treemacs-collapse-node)
+			      ("C-M-S-<right>" . treemacs-increase-width)
+			      ("C-M-S-<left>" . treemacs-decrease-width)))
 (custom-set-variables
  '(treemacs-python-executable (f-join nixpkgs/python3 "bin/python3"))
  '(treemacs-indent-guide-mode t)
@@ -546,6 +561,7 @@
 
                          ;; Code navigation
                          ("M-g M-g" . xref-find-definitions)
+                         ("M-g M-. M-g" . xref-find-definitions-other-window)
                          ("M-g M-u" . xref-find-references)
                          ("M-g M-w" . browse-at-remote)
                          ("M-g M-s" . consult-eglot-symbols)
