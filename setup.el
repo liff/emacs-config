@@ -393,6 +393,9 @@
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (ollijh/keymap-rewrite aggressive-indent-mode-map :unset '("C-c"))
 
+;;; scopeline
+(add-hook 'tree-sitter-mode-hook #'scopeline-mode)
+
 ;;; elisp-autofmt
 (keymap-set emacs-lisp-mode-map "M-o M-o" 'elisp-autofmt-buffer)
 

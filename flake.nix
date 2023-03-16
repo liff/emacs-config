@@ -172,6 +172,7 @@
           #"combobulate"
           "consult-eglot"
           "aggressive-indent"
+          "scopeline"
 
           # Programming Languages and File Formats
           "elisp-autofmt"
