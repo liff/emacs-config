@@ -144,6 +144,7 @@
           "embark-consult"
           "with-editor"
           "restclient"
+          "wgrep"
 
           # Version control
           "magit"

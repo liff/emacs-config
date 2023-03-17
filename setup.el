@@ -299,7 +299,7 @@
 (ollijh/keymap-rewrite with-editor-mode-map
                        :unset '("C-c")
                        :set '(("C-<return>" . with-editor-finish)
-                              ("ESC" . with-editor-cancel)))
+                              ("<escape>" . with-editor-cancel)))
 
 ;;; restclient
 (ollijh/keymap-rewrite restclient-mode-map
@@ -307,6 +307,15 @@
                        :set '(("C-<return>" . restclient-send-current)
                               ("C-<up>" . restclient-jump-prev)
                               ("C-<down>" . restclient-jump-next)))
+
+;;; wgrep
+(ollijh/keymap-rewrite wgrep-mode-map
+                       :unset '("C-c")
+                       :set '(("C-<return>" . wgrep-finish-edit)
+			      ("C-<escape>" . wgrep-abort-changes)
+			      ("M-k" . wgrep-mark-deletion)
+			      ("M-<backspace>" . wgrep-remove-change)
+			      ("<escape>" . wgrep-exit)))
 
 ;;; magit
 (ollijh/keymap-rewrite magit-section-mode-map
