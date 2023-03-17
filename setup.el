@@ -309,6 +309,7 @@
                               ("C-<down>" . restclient-jump-next)))
 
 ;;; wgrep
+(custom-set-variables '(wgrep-enable-key "e"))
 (ollijh/keymap-rewrite wgrep-mode-map
                        :unset '("C-c")
                        :set '(("C-<return>" . wgrep-finish-edit)
