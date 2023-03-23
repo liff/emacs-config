@@ -168,25 +168,25 @@ Return `none', `light' or `dark'."
   (interactive)
   (ollijh/wrap-x-on-x ?\[ #'sp-wrap-square))
 
-(defun ollijh/treemacs-expand-node ()
+(defun ollijh/treemacs-expand-node (&optional arg)
   "Expand the current node."
-  (interactive)
+  (interactive "P")
   (treemacs-do-for-button-state
-   :on-root-node-closed (treemacs--expand-root-node btn)
-   :on-dir-node-closed  (treemacs--expand-dir-node btn)
-   :on-file-node-closed (treemacs--expand-file-node btn)
-   :on-tag-node-closed  (treemacs--expand-tag-node btn)
+   :on-root-node-closed (treemacs--expand-root-node btn arg)
+   :on-dir-node-closed  (treemacs--expand-dir-node btn :recursive arg)
+   :on-file-node-closed (treemacs--expand-file-node btn arg)
+   :on-tag-node-closed  (treemacs--expand-tag-node btn arg)
    :on-nil              (treemacs-pulse-on-failure "There is nothing to do here.")
    :fallback            (lambda ())))
 
-(defun ollijh/treemacs-collapse-node ()
-  "Expand the current node."
-  (interactive)
+(defun ollijh/treemacs-collapse-node (&optional arg)
+  "the current node."
+  (interactive "P")
   (treemacs-do-for-button-state
-   :on-root-node-open   (treemacs--collapse-root-node btn)
-   :on-dir-node-open    (treemacs--collapse-dir-node btn)
-   :on-file-node-open   (treemacs--collapse-file-node btn)
-   :on-tag-node-open    (treemacs--collapse-tag-node btng)
+   :on-root-node-open   (treemacs--collapse-root-node btn arg)
+   :on-dir-node-open    (treemacs--collapse-dir-node btn arg)
+   :on-file-node-open   (treemacs--collapse-file-node btn arg)
+   :on-tag-node-open    (treemacs--collapse-tag-node btn arg)
    :on-nil              (treemacs-pulse-on-failure "There is nothing to do here.")
    :fallback            (lambda ())))
 

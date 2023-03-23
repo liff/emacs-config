@@ -28,13 +28,13 @@
               name = "xdg-plus.patch";
               url =
                 "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
-              hash = "sha256-jBLXwtlaHi91ZsHpCEgpEPHjcarzKka5+P/l33KSOqI=";
+              hash = "sha256-mPUFWxXnEZf2ea9raYh+ZHR9heLOigw8AN9/3sWfVvU=";
             })
             (fetchpatch {
               name = "eglot-expand-region.patch";
               url =
                 "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
-              hash = "sha256-pi200EJjMsMY+qkWKgApYCbXPXSlol6SPoSabvn5mkY=";
+              hash = "sha256-UAa1U1wYioCayf2Bv85xjLm8j2A9o5CYPH1dJwGNSmQ=";
             })
           ];
         })).override {
@@ -161,6 +161,7 @@
           "plantuml-mode"
           "mermaid-mode"
           "markdown-mode"
+          "grip-mode"
           "gh-md"
 
           # Programming Assistance
@@ -169,6 +170,7 @@
             require = [ "smartparens-config" ];
           }
           "rainbow-delimiters"
+          "prism"
           "expand-region"
           #"combobulate"
           "consult-eglot"

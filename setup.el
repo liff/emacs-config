@@ -73,6 +73,11 @@
  '(recentf-save-file (f-join user-state-directory "recentf"))
  '(recentf-exclude (list (lambda (filename) (string-prefix-p "/nix/store")))))
 (recentf-mode 1)
+;;; auth-source
+(custom-set-variables
+ '(auth-sources `(default
+		  "secrets:Login"
+		  ,(f-join user-state-directory "authinfo"))))
 ;;; savehist
 (custom-set-variables
  '(savehist-file (f-join user-state-directory "history")))
@@ -322,6 +327,8 @@
 (ollijh/keymap-rewrite magit-section-mode-map
                        :unset '("TAB" "C-<tab>" "M-<tab>" "<backtab>" "p" "n" "M-p" "M-n" "DEL" "S-SPC" "ESC")
                        :set '(("C-<down>" . magit-section-forward) ("C-<up>" . magit-section-backward)))
+(ollijh/keymap-rewrite magit-diff-section-map
+		       :unset '("C-x" "C-c"))
 (ollijh/keymap-rewrite magit-mode-map
                        :unset '("TAB" "C-w" "C-c" "C-M-i" "<" ">" "DEL" "S-SPC" "M-w" "C-<return>" "C-<tab>" "M-<tab>" "<backtab>" "ESC")
                        :set '(("<right>" . magit-section-show)
@@ -389,10 +396,34 @@
                        :set '(("C-k" . markdown-insert-link)
 			      ("M-|" . markdown-fill-paragraph)
 			      ("C-<down>" . markdown-forward-block)
-			      ("C-<up>" . markdown-backward-block)))
+			      ("C-<up>" . markdown-backward-block)
+			      ("M-o M-a" . markdown-table-align)
+			      ("<f2>" . eglot-rename)))
+
+;;; grip-mode
+(custom-set-variables
+ '(grip-preview-use-webkit t)
+ '(grip-update-after-change nil))
+(add-hook 'markdown-mode-hook #'grip-mode)
+(let* ((info (car (auth-source-search
+		   :host "api.github.com"
+		   :max 1
+		   :require '(:user :secret))))
+       (user (plist-get info :user))
+       (password (auth-info-password info)))
+  (setq grip-github-user user)
+  (setq grip-github-password password))
 
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;;; prism
+(add-hook 'bash-ts-mode-hook #'prism-mode)
+(add-hook 'c-ts-mode-hook #'prism-mode)
+(add-hook 'emacs-lisp-mode-hook #'prism-mode)
+(add-hook 'python-ts-mode-hook #'prism-whitespace-mode)
+(add-hook 'rust-ts-mode-hook #'prism-mode)
+(add-hook 'yaml-ts-mode-hook #'prism-whitespace-mode)
 
 ;;; expand-region
 (add-to-list 'er/try-expand-list 'eglot-expand-region)
