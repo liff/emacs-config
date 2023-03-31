@@ -180,6 +180,7 @@
           # Programming Languages and File Formats
           "elisp-autofmt"
           "nix-mode"
+          "nickel-mode"
           "hcl-mode"
           "terraform-mode"
           #"protobuf-ts-mode"
