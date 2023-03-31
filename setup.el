@@ -451,6 +451,9 @@
                                 (buffer-file-name (concat "nix -L build -f " buffer-file-name))
                                 (t "make -k "))))))
 
+;;; nickel-mode
+(add-to-list 'eglot-server-programs '(nickel-mode . ("ncl")))
+
 ;;; hcl-mode
 (ollijh/keymap-rewrite hcl-mode-map
                        :unset '("ESC"))
