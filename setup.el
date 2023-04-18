@@ -295,6 +295,7 @@
 (marginalia-mode 1)
 
 ;;; embark
+(keymap-set embark-identifier-map "]" #'eglot-code-actions)
 
 ;;; embark-consult
 (add-hook 'embark-collect-mode-hook 'consult-preview-at-point-mode) ; TODO: is this useful?
