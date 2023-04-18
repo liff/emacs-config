@@ -23,6 +23,8 @@
         inherit (pkgs) fetchpatch runCommand writeText;
 
         patchedEmacs = (pkgs.emacsPgtk.overrideAttrs (prev: {
+          postFixup = builtins.replaceStrings [ "/bin/emacs" ] [ "/bin/.emacs-*-wrapped" ] prev.postFixup;
+
           patches = (prev.patches or [ ]) ++ [
             (fetchpatch {
               name = "xdg-plus.patch";
