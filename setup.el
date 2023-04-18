@@ -453,7 +453,8 @@
                                 (t "make -k "))))))
 
 ;;; nickel-mode
-(add-to-list 'eglot-server-programs '(nickel-mode . ("ncl")))
+(add-to-list 'eglot-server-programs '(nickel-mode . ("nls")))
+(add-hook 'nickel-mode-hook #'eglot-ensure)
 
 ;;; hcl-mode
 (ollijh/keymap-rewrite hcl-mode-map
