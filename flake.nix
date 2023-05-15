@@ -36,7 +36,7 @@
               name = "eglot-expand-region.patch";
               url =
                 "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
-              hash = "sha256-UAa1U1wYioCayf2Bv85xjLm8j2A9o5CYPH1dJwGNSmQ=";
+              hash = "sha256-RvVNzc4Gj3yT+wQpB3z5gsWocgleSfrsLLw35sfietU=";
             })
           ];
         })).override {
