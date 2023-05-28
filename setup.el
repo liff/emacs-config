@@ -467,7 +467,8 @@
 (ollijh/keymap-rewrite terraform-mode-map
                        :set '(("M-o M-o" . terraform-format-buffer)))
 
-;;; kotlin-ts-mode
+;;; jq-mode
+(add-to-list 'auto-mode-alist '("\\.jq$" . jq-mode))
 
 ;;; haskell-mode
 (add-hook 'haskell-mode-hook #'eglot-ensure)
@@ -537,7 +538,7 @@
     (substitute-key-definition def def ollijh/global-map global-map)))
 
 (ollijh/keymap-set-all ollijh/global-map
-                       '(("RET" . newline-and-indent)
+                       '(("RET" . comment-indent-new-line)
                          ("TAB" . indent-for-tab-command)
                          ("C-o" . find-file)
                          ("C-M-o" . project-switch-project)

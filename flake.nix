@@ -97,6 +97,7 @@
           "cmake-ts-mode"
           "dockerfile-ts-mode"
           "java-ts-mode"
+          "python"
           "rust-ts-mode"
           "html-ts-mode"
           "toml-ts-mode"
@@ -185,6 +186,7 @@
           "nickel-mode"
           "hcl-mode"
           "terraform-mode"
+          "jq-mode"
           #"protobuf-ts-mode"
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
