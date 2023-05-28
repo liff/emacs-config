@@ -23,7 +23,10 @@
         inherit (pkgs) fetchpatch runCommand writeText;
 
         patchedEmacs = (pkgs.emacsPgtk.overrideAttrs (prev: {
-          postFixup = builtins.replaceStrings [ "/bin/emacs" ] [ "/bin/.emacs-*-wrapped" ] prev.postFixup;
+
+          passthru = prev.passthru // {
+            treeSitter = true;
+          };
 
           patches = (prev.patches or [ ]) ++ [
             (fetchpatch {
@@ -39,10 +42,7 @@
               hash = "sha256-RvVNzc4Gj3yT+wQpB3z5gsWocgleSfrsLLw35sfietU=";
             })
           ];
-        })).override {
-          treeSitterPlugins =
-            filter isDerivation (attrValues pkgs.tree-sitter-grammars);
-        };
+        }));
 
         bundledRequires = [
           "simple"
@@ -281,6 +281,7 @@
         emacsWithPackages = emacsPackages.emacsWithPackages;
         finalEmacs = emacsWithPackages (epkgs:
           [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
+          ++ [ epkgs.treesit-grammars.with-all-grammars ]
           ++ map (use: toEpkg use epkgs) usedPackages);
 
         app = {
