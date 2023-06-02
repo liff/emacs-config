@@ -22,7 +22,7 @@
         inherit (pkgs.lib) isDerivation;
         inherit (pkgs) fetchpatch runCommand writeText;
 
-        patchedEmacs = (pkgs.emacsPgtk.overrideAttrs (prev: {
+        patchedEmacs = (pkgs.emacs-pgtk.overrideAttrs (prev: {
 
           passthru = prev.passthru // {
             treeSitter = true;
