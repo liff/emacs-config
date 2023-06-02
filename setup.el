@@ -417,6 +417,10 @@
   (setq grip-github-user user)
   (setq grip-github-password password))
 
+;;; adoc-mode
+;; TODO: customize adoc-code-lang-modes
+(ollijh/keymap-rewrite adoc-mode-map :unset '("C-c"))
+
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 

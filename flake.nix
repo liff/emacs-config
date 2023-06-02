@@ -166,6 +166,7 @@
           "markdown-mode"
           "grip-mode"
           "gh-md"
+          "adoc-mode"
 
           # Programming Assistance
           {
