@@ -189,6 +189,8 @@
 (winner-mode 1)
 ;;; eglot
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
+(keymap-set eglot-mode-map "<f2>" #'eglot-rename)
+(keymap-set eglot-mode-map "M-o M-o" #'eglot-format-buffer)
 
 ;;; gsettings
 (when (gsettings-available?)
