@@ -220,7 +220,7 @@
           };
 
         nixDependencies = with pkgs; ''
-          (defconst nixpkgs/aspell "${aspell}")
+          (defconst nixpkgs/aspell "${aspellWithDicts (ds: with ds; [ en fi ])}")
           (defconst nixpkgs/editorconfig-core-c "${editorconfig-core-c}")
           (defconst nixpkgs/ghostscript "${ghostscript}")
           (defconst nixpkgs/openjdk "${openjdk}")
