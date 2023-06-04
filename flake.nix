@@ -33,13 +33,13 @@
               name = "xdg-plus.patch";
               url =
                 "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
-              hash = "sha256-mPUFWxXnEZf2ea9raYh+ZHR9heLOigw8AN9/3sWfVvU=";
+              hash = "sha256-OfDfsYTHTs6pPmkyMZlc4UVQh/NUnY+UzpuPwchr8Cw=";
             })
             (fetchpatch {
               name = "eglot-expand-region.patch";
               url =
                 "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
-              hash = "sha256-RvVNzc4Gj3yT+wQpB3z5gsWocgleSfrsLLw35sfietU=";
+              hash = "sha256-1TJS7dnNphqMQAyHdkQj94X9lppHYm1sh5+ZAj0sc4o=";
             })
           ];
         }));
