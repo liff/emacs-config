@@ -91,15 +91,17 @@ Return `none', `light' or `dark'."
 (defun ollijh/currently-preferred-appearance ()
   "Get current appearance preference.
 Return `none', `light' or `dark'."
-  (ollijh/appearance-name
-   (caar (dbus-call-method
-	  :session
-	  "org.freedesktop.portal.Desktop"
-	  "/org/freedesktop/portal/desktop"
-	  "org.freedesktop.portal.Settings"
-	  "Read"
-	  "org.freedesktop.appearance"
-	  "color-scheme"))))
+  (condition-case-unless-debug nil
+      (ollijh/appearance-name
+       (caar (dbus-call-method
+	      :session
+	      "org.freedesktop.portal.Desktop"
+	      "/org/freedesktop/portal/desktop"
+	      "org.freedesktop.portal.Settings"
+	      "Read"
+	      "org.freedesktop.appearance"
+	      "color-scheme")))
+    (dbus-error 'none)))
 
 (defun ollijh/register-appearance-change-handler (handler)
   (dbus-register-signal
