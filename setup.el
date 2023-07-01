@@ -425,6 +425,7 @@
 ;;; adoc-mode
 ;; TODO: customize adoc-code-lang-modes
 (ollijh/keymap-rewrite adoc-mode-map :unset '("C-c"))
+(add-hook 'adoc-mode-hook (lambda () (setq fill-column 80)))
 
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
