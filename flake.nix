@@ -245,6 +245,7 @@
 
           (setq magit-define-global-key-bindings nil)
           (setq forge-database-connector 'sqlite-builtin)
+          (setq treemacs-python-executable (f-join nixpkgs/python3 "bin/python3"))
           ${installed}
           (require 'ollijh)
 
