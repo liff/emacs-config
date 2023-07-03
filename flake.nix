@@ -243,6 +243,7 @@
           (setq edebug-inhibit-emacs-lisp-mode-bindings t)
           ${bundled}
 
+          (require 'f)
           (setq magit-define-global-key-bindings nil)
           (setq forge-database-connector 'sqlite-builtin)
           (setq treemacs-python-executable (f-join nixpkgs/python3 "bin/python3"))
