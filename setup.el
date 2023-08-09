@@ -186,6 +186,11 @@
 ;;; conf-mode
 (ollijh/keymap-rewrite conf-mode-map
                        :unset '("C-c"))
+;;; sh-script
+(ollijh/keymap-rewrite sh-mode-map
+                       :unset '("C-c" "C-M-x"))
+
+;;; js
 ;;; winner-mode
 (ollijh/keymap-rewrite winner-mode-map
                        :unset '("C-c")
@@ -477,6 +482,7 @@
 (add-hook 'terraform-mode-hook #'eglot-ensure)
 (add-hook 'terraform-mode-hook (lambda () (setq-local compile-command "terraform plan")))
 (ollijh/keymap-rewrite terraform-mode-map
+		       :unset '("C-c")
                        :set '(("M-o M-o" . terraform-format-buffer)))
 
 ;;; jq-mode

@@ -103,6 +103,7 @@
           "toml-ts-mode"
           "yaml-ts-mode"
           "conf-mode"
+          "sh-script"
           "js"
           "flymake"
           "flyspell"
