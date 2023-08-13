@@ -350,6 +350,17 @@
                               ("<f5>" . magit-refresh)
                               ("M-<return>" . magit-stage-file)
                               ("M-<backspace>" . magit-unstage-file)))
+(ollijh/keymap-rewrite magit-log-mode-map
+		       :unset '("C-c")
+		       :set '(("M-<left>" . magit-go-backward)
+			      ("M-<right>" . magit-go-forward)))
+(ollijh/keymap-rewrite magit-log-select-mode-map
+		       :unset '("C-c")
+		       :set '(("C-<return>" . magit-log-select-pick)
+			      ("ESC" . magit-log-select-quit)
+			      ("M-<left>" . undefined)
+			      ("M-<right>" . undefined)))
+
 (custom-set-variables
  '(magit-wip-mode t))
 
