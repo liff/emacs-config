@@ -191,6 +191,13 @@
                        :unset '("C-c" "C-M-x"))
 
 ;;; js
+;;; diff-mode
+(ollijh/keymap-rewrite diff-mode-map
+		       :unset '("C-x" "C-c" "ESC")
+		       :set '(("C-<next>" . diff-hunk-next)
+			      ("C-<prior>" . diff-hunk-prev)
+			      ("M-g M-o" . diff-goto-source))
+		       )
 ;;; winner-mode
 (ollijh/keymap-rewrite winner-mode-map
                        :unset '("C-c")

@@ -105,6 +105,7 @@
           "conf-mode"
           "sh-script"
           "js"
+          "diff-mode"
           "flymake"
           "flyspell"
           "winner"
