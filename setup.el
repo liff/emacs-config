@@ -197,7 +197,8 @@
 		       :set '(("C-<down>" . diff-hunk-next)
 			      ("C-<up>" . diff-hunk-prev)
 			      ("M-g M-o" . diff-goto-source)
-			      ("C-<return>" . diff-apply-hunk)))
+			      ("C-<return>" . diff-apply-hunk)
+			      ("C-M-c C-M-c" . diff-hunk-kill)))
 ;;; winner-mode
 (ollijh/keymap-rewrite winner-mode-map
                        :unset '("C-c")
