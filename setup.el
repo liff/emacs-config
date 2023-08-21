@@ -300,6 +300,7 @@
 ;;; consult
 (custom-set-variables
  '(consult-line-start-from-top t))
+(keymap-set prog-mode-map "M-p M-s" #'consult-imenu)
 
 ;;; vertico
 (vertico-mode 1)
@@ -517,6 +518,8 @@
 (add-hook 'kotlin-mode-hook (lambda () (setq-local compile-command "gradle build")))
 (ollijh/keymap-rewrite kotlin-mode-map
                        :unset '("C-c"))
+
+;;; himalaya
 
 ;;; adwaita
 (load-theme 'adwaita t t)

@@ -82,6 +82,7 @@
           "executable"
           "eshell"
           "outline"
+          "imenu"
           "text-mode"
           "shortdoc"
           "doc-view"
@@ -193,6 +194,9 @@
           #"protobuf-ts-mode"
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
+
+          # Tools
+          "himalaya"
 
           # Themes
           "twilight-anti-bright-theme"
