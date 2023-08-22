@@ -684,13 +684,18 @@
                          ("C-M-c C-M-p" . dired-copy-filename-as-kill)
                          ("C-M-c C-M-w" . browse-at-remote-kill)
 
+			 ;; VC
+			 ("<f4>" . magit-status)
+                         ("M-v M-b" . magit-branch)
+                         ("M-v M-p" . magit-push)
+                         ("M-v M-f" . magit-pull)
+
                          ;; Other
                          ("<f10>" . menu-bar-open)
                          ("S-<f10>" . context-menu-open)
                          ("C--" . text-scale-adjust)
                          ("C-=" . text-scale-adjust)
                          ("C-0" . text-scale-adjust)
-                         ("<f4>" . magit-status)
                          )
                        )
 
