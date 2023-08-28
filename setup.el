@@ -377,6 +377,8 @@
 ;;; forge
 (custom-set-variables
  '(forge-database-file (f-join user-state-directory "forge/database.sqlite")))
+(ollijh/keymap-rewrite forge-topic-mode-map
+		       :unset '("C-c"))
 
 ;;; treemacs
 (ollijh/keymap-rewrite treemacs-mode-map
