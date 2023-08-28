@@ -219,7 +219,8 @@
                        :unset '("ESC")
                        :set '(("<escape>" . transient-quit-one)))
 (custom-set-variables
- '(transient-history-file (f-join user-state-directory "transient/history.el")))
+ '(transient-history-file (f-join user-state-directory "transient/history.el"))
+ '(transient-levels '((magit-pull (transient:magit-pull:--autostash . 1)))))
 
 ;;; undo-tree
 (ollijh/keymap-rewrite undo-tree-map
