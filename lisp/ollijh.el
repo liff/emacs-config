@@ -192,4 +192,20 @@ Return `none', `light' or `dark'."
    :on-nil              (treemacs-pulse-on-failure "There is nothing to do here.")
    :fallback            (lambda ())))
 
+(defun ollijh/lineify-region ()
+  (interactive)
+  (if (region-active-p)
+      (let ((next-mark
+	     (if (equal (mark) (save-mark-and-excursion
+				 (exchange-point-and-mark)
+				 (line-beginning-position)))
+		 (mark)
+	       (save-mark-and-excursion
+		 (exchange-point-and-mark)
+		 (next-line)
+		 (goto-char (line-beginning-position))
+		 (point)))))
+	(goto-char (line-beginning-position))
+	(set-mark next-mark))))
+
 (provide 'ollijh)

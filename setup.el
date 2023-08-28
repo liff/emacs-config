@@ -623,6 +623,7 @@
                          ("C-y" . undo-redo)
                          ("C-M-<right>" . er/expand-region)
                          ("C-M-<left>" . er/contract-region)
+			 ("C-M-<down>" . ollijh/lineify-region)
 
                          ;; Manipulation
                          ("<delete>" . delete-forward-char)
