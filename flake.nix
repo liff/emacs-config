@@ -13,6 +13,7 @@
   outputs = { self, nixpkgs, flake-utils, emacs-overlay }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        major = "29";
         inherit (builtins)
           attrValues concatStringsSep filter getAttr map isString readFile;
         pkgs = import nixpkgs {
@@ -22,7 +23,7 @@
         inherit (pkgs.lib) isDerivation;
         inherit (pkgs) fetchpatch runCommand writeText;
 
-        patchedEmacs = (pkgs.emacs-pgtk.overrideAttrs (prev: {
+        patchedEmacs = (pkgs."emacs${major}-pgtk".overrideAttrs (prev: {
 
           passthru = prev.passthru // {
             treeSitter = true;
@@ -32,14 +33,14 @@
             (fetchpatch {
               name = "xdg-plus.patch";
               url =
-                "https://github.com/liff/emacs/compare/master...liff:emacs:xdg-plus.patch";
-              hash = "sha256-OfDfsYTHTs6pPmkyMZlc4UVQh/NUnY+UzpuPwchr8Cw=";
+                "https://github.com/liff/emacs/compare/emacs-${major}...liff:emacs:xdg-plus-${major}.patch";
+              hash = "sha256-bTrVL1CFxfD8eGRmnMtjKS/NHJ9SrEddIoadcIUh3cI=";
             })
             (fetchpatch {
               name = "eglot-expand-region.patch";
               url =
-                "https://github.com/liff/emacs/compare/master...liff:emacs:eglot-expand-region.patch";
-              hash = "sha256-1TJS7dnNphqMQAyHdkQj94X9lppHYm1sh5+ZAj0sc4o=";
+                "https://github.com/liff/emacs/compare/emacs-${major}...liff:emacs:eglot-expand-region-${major}.patch";
+              hash = "sha256-nyEsKdpab5QLDMKWyk7GEo2XMSg4tQN7/62sXJaPpTg=";
             })
           ];
         }));
@@ -100,7 +101,7 @@
           "java-ts-mode"
           "python"
           "rust-ts-mode"
-          "html-ts-mode"
+          # "html-ts-mode"
           "toml-ts-mode"
           "yaml-ts-mode"
           "conf-mode"
