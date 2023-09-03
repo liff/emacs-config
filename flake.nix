@@ -111,6 +111,7 @@
           "flyspell"
           "winner"
           "eglot"
+          "smerge-mode"
         ];
         usedPackages = [
           # Early and/or essential

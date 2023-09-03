@@ -211,6 +211,10 @@
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
 (keymap-set eglot-mode-map "<f2>" #'eglot-rename)
 (keymap-set eglot-mode-map "M-o M-o" #'eglot-format-buffer)
+;;; smerge-mode
+(ollijh/keymap-rewrite smerge-mode-map
+		       :unset '("C-c")
+		       :set '())
 
 ;;; gsettings
 (when (gsettings-available?)
