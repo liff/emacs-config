@@ -445,8 +445,8 @@
 ;;; grip-mode
 (custom-set-variables
  '(grip-preview-use-webkit t)
- '(grip-update-after-change nil))
-(add-hook 'markdown-mode-hook #'grip-mode)
+ '(grip-update-after-change nil)
+ '(grip-binary-path (f-join nixpkgs/grip "bin/grip")))
 (let* ((info (car (auth-source-search
 		   :host "api.github.com"
 		   :max 1

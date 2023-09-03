@@ -235,6 +235,7 @@
           (defconst nixpkgs/mermaid-cli "${nodePackages.mermaid-cli}")
           (defconst nixpkgs/python3 "${python3}")
           (defconst nixpkgs/sqlite "${sqlite}")
+          (defconst nixpkgs/grip "${python3Packages.grip}")
         '';
 
         defaultEl = let
