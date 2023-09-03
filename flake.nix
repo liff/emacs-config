@@ -274,6 +274,11 @@
         noEglot = removePkg "eglot";
 
         epkgOverrides = final: prev: {
+          smartparens = prev.smartparens.overrideAttrs (old: {
+            patches = (old.patches or []) ++ [
+              ./patches/smartparens/0001-Add-support-for-tree-sitter-modes.patch
+            ];
+          });
           consult-eglot = prev.consult-eglot.overrideAttrs (old: {
             nativeBuildInputs = (old.nativeBuildInputs or [ ])
               ++ [ pkgs.gnused ];

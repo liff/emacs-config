@@ -1,0 +1,109 @@
+From 9516c507736fac697589ecdacdecee28d42b0247 Mon Sep 17 00:00:00 2001
+From: Olli Helenius <liff@iki.fi>
+Date: Sun, 3 Sep 2023 12:33:53 +0300
+Subject: [PATCH] Add support for tree-sitter modes
+
+---
+ smartparens-config.el | 5 ++++-
+ smartparens-python.el | 4 ++--
+ smartparens-rust.el   | 4 +++-
+ smartparens.el        | 2 ++
+ 4 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/smartparens-config.el b/smartparens-config.el
+index 7bfcfe0..2540a4b 100644
+--- a/smartparens-config.el
++++ b/smartparens-config.el
+@@ -117,6 +117,8 @@ ID, ACTION, CONTEXT."
+ ;; macro, you MUST supply the major mode argument.
+ 
+ (eval-after-load 'cc-mode                  '(require 'smartparens-c))
++(eval-after-load 'c-ts-mode                '(require 'smartparens-c))
++(eval-after-load 'c++-ts-mode              '(require 'smartparens-c))
+ (eval-after-load 'clojure-mode             '(require 'smartparens-clojure))
+ (eval-after-load 'crystal-mode             '(require 'smartparens-crystal))
+ (eval-after-load 'elixir-mode              '(require 'smartparens-elixir))
+@@ -132,7 +134,7 @@ ID, ACTION, CONTEXT."
+ (eval-after-load 'latex                    '(require 'smartparens-latex))
+ (eval-after-load 'lua-mode                 '(require 'smartparens-lua))
+ (eval-after-load 'markdown-mode            '(require 'smartparens-markdown))
+-(--each '(python-mode python)
++(--each '(python-mode python python-ts-mode)
+   (eval-after-load it                      '(require 'smartparens-python)))
+ (eval-after-load 'org                      '(require 'smartparens-org))
+ (eval-after-load 'racket-mode              '(require 'smartparens-racket))
+@@ -140,6 +142,7 @@ ID, ACTION, CONTEXT."
+ (eval-after-load 'ruby-mode                '(require 'smartparens-ruby))
+ (eval-after-load 'rust-mode                '(require 'smartparens-rust))
+ (eval-after-load 'rustic                   '(require 'smartparens-rust))
++(eval-after-load 'rust-ts-mode             '(require 'smartparens-rust))
+ (eval-after-load 'scala-mode               '(require 'smartparens-scala))
+ (eval-after-load 'swift-mode               '(require 'smartparens-swift))
+ (eval-after-load 'tex-mode                 '(require 'smartparens-latex))
+diff --git a/smartparens-python.el b/smartparens-python.el
+index dbe6333..d94e459 100644
+--- a/smartparens-python.el
++++ b/smartparens-python.el
+@@ -65,7 +65,7 @@ Supported definitions are:
+ ;; Python has no sexp suffices.  This fixes slurping
+ ;; (|sys).path.append---the dot should not travel with the closing
+ ;; paren
+-(--each '(python-mode inferior-python-mode)
++(--each '(python-mode inferior-python-mode python-ts-mode)
+   (add-to-list 'sp-sexp-suffix (list it 'regexp "")))
+ 
+ (defun sp-python-maybe-add-colon-python (_id action _context)
+@@ -93,7 +93,7 @@ See also the option `sp-python-insert-colon-in-function-definitions'."
+       (forward-char) ;; skip closing paren
+       (insert ":"))))
+ 
+-(sp-with-modes 'python-mode
++(sp-with-modes '(python-mode python-ts-mode)
+   (sp-local-pair "'" "'" :unless '(sp-in-comment-p sp-in-string-quotes-p) :post-handlers '(:add sp-python-fix-tripple-quotes))
+   (sp-local-pair "\"" "\"" :post-handlers '(:add sp-python-fix-tripple-quotes))
+   (sp-local-pair "'''" "'''")
+diff --git a/smartparens-rust.el b/smartparens-rust.el
+index 42996d8..5217a0d 100644
+--- a/smartparens-rust.el
++++ b/smartparens-rust.el
+@@ -45,6 +45,7 @@
+ (require 'smartparens)
+ 
+ (declare-function rust-mode "rust-mode")
++(declare-function rust-ts-mode "rust-ts-mode")
+ (declare-function rustic-mode "rustic-mode")
+ 
+ (defun sp-in-rust-lifetime-context (&rest _args)
+@@ -124,7 +125,7 @@ ARGS."
+        ((eq action 'navigate)
+         (and (not on-comparison) (not on-fn-return-type) (not on-match-branch))))))))
+ 
+-(sp-with-modes '(rust-mode rustic-mode)
++(sp-with-modes '(rust-mode rustic-mode rust-ts-mode)
+   (sp-local-pair "'" "'"
+                  :unless '(sp-in-comment-p sp-in-string-quotes-p sp-in-rust-lifetime-context)
+                  :post-handlers'(:rem sp-escape-quotes-after-insert))
+@@ -136,6 +137,7 @@ ARGS."
+ ;; (|foo).bar -> (foo.bar)
+ (add-to-list 'sp-sexp-suffix (list #'rust-mode 'regexp ""))
+ (add-to-list 'sp-sexp-suffix (list #'rustic-mode 'regexp ""))
++(add-to-list 'sp-sexp-suffix (list #'rust-ts-mode 'regexp ""))
+ 
+ (provide 'smartparens-rust)
+ 
+diff --git a/smartparens.el b/smartparens.el
+index bf99f5f..a2f830b 100644
+--- a/smartparens.el
++++ b/smartparens.el
+@@ -606,6 +606,8 @@ Symbol is defined as a chunk of text recognized by
+ (defcustom sp-c-modes '(
+                         c-mode
+                         c++-mode
++                        c-ts-mode
++                        c++-ts-mode
+                         )
+   "List of C-related modes."
+   :type '(repeat symbol)
+-- 
+2.41.0
+
