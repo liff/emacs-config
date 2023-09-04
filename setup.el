@@ -247,6 +247,7 @@
  ;;'(popper-display-function #'display-buffer-in-child-frame)
  '(popper-reference-buffers '("\\*Messages\\*$"
                               "\\*Warnings\\*$"
+			      "\\*Async Shell Command\*$"
                               help-mode
                               helpful-mode
                               compilation-mode)))
@@ -298,11 +299,16 @@
 
 ;;; corfu
 (custom-set-variables
- '(corfu-auto t)
- '(corfu-popupinfo-mode 1)
- '(corfu-popupinfo-delay t))
+ '(corfu-auto t))
 (eldoc-add-command #'corfu-insert)
 (global-corfu-mode 1)
+;;; corfu-popupinfo
+(custom-set-variables
+ '(corfu-popupinfo-delay 0.3))
+(corfu-popupinfo-mode 1)
+;;; corfu-history
+(corfu-history-mode 1)
+(add-to-list 'savehist-additional-variables 'corfu-history)
 
 ;;; consult
 (custom-set-variables
@@ -588,7 +594,7 @@
     (substitute-key-definition def def ollijh/global-map global-map)))
 
 (ollijh/keymap-set-all ollijh/global-map
-                       '(("RET" . comment-indent-new-line)
+                       '(("RET" . default-indent-new-line)
                          ("TAB" . indent-for-tab-command)
                          ("C-o" . find-file)
                          ("C-M-o" . project-switch-project)

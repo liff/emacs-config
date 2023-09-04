@@ -141,7 +141,10 @@
           "better-jumper"
           "goto-chg" # TODO
           "helpful"
-          "corfu"
+          {
+            name = "corfu";
+            require = [ "corfu" "corfu-history" "corfu-popupinfo" ];
+          }
           "consult"
           "consult-project-extra"
           "vertico"
