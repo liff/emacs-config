@@ -208,4 +208,24 @@ Return `none', `light' or `dark'."
 	(goto-char (line-beginning-position))
 	(set-mark next-mark))))
 
+(defun ollijh/treesit-node-text-at-or-nil (pos &optional parser-or-lang named)
+  (condition-case nil
+      (treesit-node-text (treesit-node-at pos parser-or-lang named) t)
+    (treesit-no-parser nil)))
+
+(defun ollijh/one-line-region-content ()
+  (let ((beg (region-beginning))
+	(end (region-end)))
+    (when (= 1 (count-lines beg end))
+      (buffer-substring (region-beginning) (region-end)))))
+
+(defun ollijh/consult-line ()
+  (interactive)
+  (let ((initial
+	 (if (region-active-p)
+	     (ollijh/one-line-region-content)
+	   (or (ollijh/treesit-node-at-or-nil (point))
+	       (thing-at-point 'symbol)))))
+    (consult-line initial t)))
+
 (provide 'ollijh)

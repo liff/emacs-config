@@ -611,7 +611,7 @@
                          ("<escape>" . keyboard-quit)
 
                          ;; Searching
-                         ("C-f" . consult-line)
+                         ("C-f" . ollijh/consult-line)
                          ("C-h" . query-replace)
                          ("<f3>" . ollijh/repeat-search-forward)
                          ("S-<f3>" . ollijh/repeat-search-backward)
