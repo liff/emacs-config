@@ -111,7 +111,7 @@
 ;;; autorevert
 (global-auto-revert-mode 1)
 ;;; kill-ring-deindent
-(global-kill-ring-deindent-mode 1)
+(kill-ring-deindent-mode 1)
 ;;; treesit
 (custom-set-variables
  '(major-mode-remap-alist '((c-mode          . c-ts-mode)
