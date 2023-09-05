@@ -203,6 +203,7 @@
           "himalaya"
 
           # Themes
+          "kind-icon"
           "twilight-anti-bright-theme"
           "modus-themes"
           "nano-theme"
@@ -248,7 +249,10 @@
           ;; Local Variables:
           ;; lexical-binding t
           ;;; Code:
-          (custom-set-variables `(gc-cons-threshold ,(* 1024 1024 1024)))
+          (custom-set-variables
+            `(gc-cons-threshold ,(* 1024 1024 1024))
+            '(byte-compile-warnings '(not docstrings))
+            '(warning-suppress-log-types '((comp) (bytecomp))))
           ${nixDependencies}
 
           (setq edebug-inhibit-emacs-lisp-mode-bindings t)

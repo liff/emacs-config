@@ -14,7 +14,8 @@
  '(visible-bell t)
  '(window-combination-resize t)
  '(font-use-system-font t)
- '(meta-prefix-char nil))
+ '(meta-prefix-char nil)
+ '(x-underline-at-descent-line t))
 ;;; minibuffer
 (ollijh/keymap-rewrite minibuffer-mode-map
                        :unset '("C-g" "C-j" "M-<" "M-p" "M-r" "M-s" "C-x" "ESC")
@@ -536,6 +537,9 @@
                        :unset '("C-c"))
 
 ;;; himalaya
+
+;;; kind-icon
+(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
 
 ;;; adwaita
 (load-theme 'adwaita t t)
