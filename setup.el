@@ -22,6 +22,7 @@
                        :set '(("<escape>" . minibuffer-keyboard-quit)
                               ("C-<tab>" . next-line)
                               ("C-S-<tab>" . previous-line)))
+(custom-set-variables '(completions-detailed t))
 ;;; window
 (custom-set-variables '(scroll-error-top-bottom t))
 ;;; files
