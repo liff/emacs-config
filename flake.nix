@@ -58,6 +58,7 @@
           "tool-bar"
           "menu-bar"
           "recentf"
+          "secrets"
           "auth-source"
           "xref"
           "xwidget"

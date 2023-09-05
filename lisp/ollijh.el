@@ -224,7 +224,7 @@ Return `none', `light' or `dark'."
   (let ((initial
 	 (if (region-active-p)
 	     (ollijh/one-line-region-content)
-	   (or (ollijh/treesit-node-at-or-nil (point))
+	   (or (ollijh/treesit-node-text-at-or-nil (point))
 	       (thing-at-point 'symbol)))))
     (consult-line initial t)))
 
