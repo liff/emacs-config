@@ -21,7 +21,11 @@
                        :unset '("C-g" "C-j" "M-<" "M-p" "M-r" "M-s" "C-x" "ESC")
                        :set '(("<escape>" . minibuffer-keyboard-quit)
                               ("C-<tab>" . next-line)
+                              ("C-<iso-lefttab>" . previous-line)
                               ("C-S-<tab>" . previous-line)))
+(ollijh/keymap-rewrite minibuffer-local-map
+		       :set '(("M-<up>" . previous-history-element)
+			      ("M-<down>" . next-history-element)))
 (custom-set-variables '(completions-detailed t))
 ;;; window
 (custom-set-variables '(scroll-error-top-bottom t))
