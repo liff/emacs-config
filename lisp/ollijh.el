@@ -194,7 +194,7 @@ Return `none', `light' or `dark'."
 
 (defun ollijh/lineify-region ()
   (interactive)
-  (if (region-active-p)
+  (if (use-region-p)
       (let ((next-mark
 	     (if (equal (mark) (save-mark-and-excursion
 				 (exchange-point-and-mark)
@@ -221,11 +221,8 @@ Return `none', `light' or `dark'."
 
 (defun ollijh/consult-line ()
   (interactive)
-  (let ((initial
-	 (if (region-active-p)
-	     (ollijh/one-line-region-content)
-	   (or (ollijh/treesit-node-text-at-or-nil (point))
-	       (thing-at-point 'symbol)))))
+  (let ((initial (when (use-region-p) (ollijh/one-line-region-content))))
+    (deactivate-mark)
     (consult-line initial t)))
 
 (provide 'ollijh)
