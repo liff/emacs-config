@@ -225,4 +225,22 @@ Return `none', `light' or `dark'."
     (deactivate-mark)
     (consult-line initial t)))
 
+(defun ollijh/prev-imenu-item ()
+  (interactive)
+  (let ((marker (cdr-safe
+		 (car-safe
+		  (seq-drop-while
+		   (lambda (item) (or (> (cdr item) (point-marker)) (equal (cdr item) (point-marker))))
+		   (reverse (seq-sort-by #'cdr #'< (consult-imenu--items))))))))
+    (when marker (goto-char marker))))
+
+(defun ollijh/next-imenu-item ()
+  (interactive)
+  (let ((marker (cdr-safe
+		 (car-safe
+		  (seq-drop-while
+		   (lambda (item) (or (< (cdr item) (point-marker)) (equal (cdr item) (point-marker))))
+		   (seq-sort-by #'cdr #'< (consult-imenu--items)))))))
+    (when marker (goto-char marker))))
+
 (provide 'ollijh)

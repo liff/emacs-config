@@ -255,8 +255,8 @@
  ;;'(popper-display-function #'display-buffer-in-child-frame)
  '(popper-reference-buffers '("\\*Messages\\*$"
                               "\\*Warnings\\*$"
-			      "\\*Async Shell Command\*$"
-			      "\\*Pp Eval Output\*$"
+			      "\\*Async Shell Command\\*$"
+			      "\\*Pp Eval Output\\*$"
                               help-mode
                               helpful-mode
                               compilation-mode)))
@@ -689,6 +689,8 @@
                          ("M-g M-u" . xref-find-references)
                          ("M-g M-w" . browse-at-remote)
                          ("M-g M-s" . consult-eglot-symbols)
+			 ("C-<up>" . ollijh/prev-imenu-item)
+			 ("C-<down>" . ollijh/next-imenu-item)
 
                          ;; Windows/frames
                          ("<f11>" . toggle-frame-fullscreen)
@@ -707,13 +709,14 @@
                          ("M-. M-<delete> M-<left>" . windmove-delete-left)
                          ("M-. M-<delete> M-<right>" . windmove-delete-right)
 			 ("M-. M-s" . window-swap-states)
-                         ("C-`" . popper-toggle-latest)
+                         ("C-`" . popper-toggle)
 
                          ;; Tools
                          ("M-<home>" . treemacs-select-window)
                          ("C-." . emoji-insert)
                          ("M-'" . embark-act)
                          ("M-(" . pp-eval-expression)
+                         ("C-(" . eval-expression)
 
                          ;; Documentation
                          ("<f1>" . helpful-at-point)
