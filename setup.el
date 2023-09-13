@@ -368,6 +368,10 @@
 			      ("<escape>" . wgrep-exit)))
 
 ;;; magit
+(ollijh/keymap-rewrite git-commit-mode-map
+		       :unset '("C-c")
+		       :set '(("M-<up>" . git-commit-prev-message)
+			      ("M-<down>" . git-commit-next-message)))
 (ollijh/keymap-rewrite magit-section-mode-map
                        :unset '("TAB" "C-<tab>" "M-<tab>" "<backtab>" "p" "n" "M-p" "M-n" "DEL" "S-SPC" "ESC")
                        :set '(("C-<down>" . magit-section-forward) ("C-<up>" . magit-section-backward)))
