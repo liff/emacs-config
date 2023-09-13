@@ -113,6 +113,7 @@
           "winner"
           "eglot"
           "smerge-mode"
+          "windmove"
         ];
         usedPackages = [
           # Early and/or essential

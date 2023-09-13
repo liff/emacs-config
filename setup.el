@@ -247,6 +247,8 @@
 ;;; which-key
 (which-key-mode 1)
 
+;;; windsize
+
 ;;; popper
 (custom-set-variables
  '(popper-group-function #'popper-group-by-project)
@@ -254,6 +256,7 @@
  '(popper-reference-buffers '("\\*Messages\\*$"
                               "\\*Warnings\\*$"
 			      "\\*Async Shell Command\*$"
+			      "\\*Pp Eval Output\*$"
                               help-mode
                               helpful-mode
                               compilation-mode)))
@@ -472,6 +475,7 @@
 ;; TODO: customize adoc-code-lang-modes
 (ollijh/keymap-rewrite adoc-mode-map :unset '("C-c"))
 (add-hook 'adoc-mode-hook (lambda () (setq fill-column 80)))
+(keymap-set adoc-mode-map "M-p M-s" #'consult-imenu)
 
 ;;; rainbow-delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -693,7 +697,11 @@
                          ("C-M-S-<right>" . windsize-right)
                          ("M-. M-<down>" . split-window-below)
                          ("M-. M-<right>" . split-window-right)
-                         ("M-. M-<delete>" . delete-window)
+                         ("M-. M-<delete> M-<delete>" . delete-window)
+                         ("M-. M-<delete> M-<up>" . windmove-delete-up)
+                         ("M-. M-<delete> M-<down>" . windmove-delete-down)
+                         ("M-. M-<delete> M-<left>" . windmove-delete-left)
+                         ("M-. M-<delete> M-<right>" . windmove-delete-right)
 			 ("M-. M-s" . window-swap-states)
                          ("C-`" . popper-toggle-latest)
 
@@ -701,6 +709,7 @@
                          ("M-<home>" . treemacs-select-window)
                          ("C-." . emoji-insert)
                          ("M-'" . embark-act)
+                         ("M-(" . pp-eval-expression)
 
                          ;; Documentation
                          ("<f1>" . helpful-at-point)
