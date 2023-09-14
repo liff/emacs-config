@@ -230,7 +230,7 @@ Return `none', `light' or `dark'."
   (let ((marker (cdr-safe
 		 (car-safe
 		  (seq-drop-while
-		   (lambda (item) (or (> (cdr item) (point-marker)) (equal (cdr item) (point-marker))))
+		   (lambda (item) (>= (cdr item) (point-marker)))
 		   (reverse (seq-sort-by #'cdr #'< (consult-imenu--items))))))))
     (when marker (goto-char marker))))
 
@@ -239,7 +239,7 @@ Return `none', `light' or `dark'."
   (let ((marker (cdr-safe
 		 (car-safe
 		  (seq-drop-while
-		   (lambda (item) (or (< (cdr item) (point-marker)) (equal (cdr item) (point-marker))))
+		   (lambda (item) (<= (cdr item) (point-marker)))
 		   (seq-sort-by #'cdr #'< (consult-imenu--items)))))))
     (when marker (goto-char marker))))
 
