@@ -404,6 +404,10 @@
  '(forge-database-file (f-join user-state-directory "forge/database.sqlite")))
 (ollijh/keymap-rewrite forge-topic-mode-map
 		       :unset '("C-c"))
+(ollijh/keymap-rewrite forge-post-mode-map
+		       :unset '("C-c")
+		       :set '(("C-<return>" . forge-post-submit)
+			      ("ESC" . forge-post-cancel)))
 
 ;;; treemacs
 (ollijh/keymap-rewrite treemacs-mode-map
