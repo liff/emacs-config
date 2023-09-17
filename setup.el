@@ -259,7 +259,8 @@
 			      "\\*Pp Eval Output\\*$"
                               help-mode
                               helpful-mode
-                              compilation-mode)))
+                              compilation-mode
+			      special-mode)))
 (popper-mode 1)
 (popper-echo-mode 1)
 
