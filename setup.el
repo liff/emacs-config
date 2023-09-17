@@ -509,6 +509,9 @@
 ;;; scopeline
 (add-hook 'tree-sitter-mode-hook #'scopeline-mode)
 
+;;; breadcrumb
+(breadcrumb-mode 1)
+
 ;;; elisp-autofmt
 (keymap-set emacs-lisp-mode-map "M-o M-o" 'elisp-autofmt-buffer)
 

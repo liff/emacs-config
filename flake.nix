@@ -189,6 +189,7 @@
           "consult-eglot"
           "aggressive-indent"
           "scopeline"
+          "breadcrumb"
 
           # Programming Languages and File Formats
           "elisp-autofmt"
