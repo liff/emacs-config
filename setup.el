@@ -173,8 +173,6 @@
 (ollijh/keymap-rewrite sql-mode-map
 		       :unset '("C-c")
 		       :set '(("C-<return>" . sql-send-paragraph)))
-(add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
-(add-hook 'sql-mode-hook #'eglot-ensure)
 ;;; c-ts-mode
 (ollijh/keymap-rewrite c-ts-base-mode-map
                        :unset '("C-c"))
