@@ -463,8 +463,7 @@
 
 ;;; markdown-mode
 (add-hook 'markdown-mode-hook #'eglot-ensure)
-(setf (alist-get 'markdown-mode eglot-server-programs)
-      (eglot-alternatives (list (list (f-join nixpkgs/marksman "bin/marksman") "server"))))
+(setf (alist-get 'markdown-mode eglot-server-programs) (list (f-join nixpkgs/marksman "bin/marksman") "server"))
 (ollijh/keymap-rewrite markdown-mode-map
                        :unset '("ESC" "C-c" "C-x")
                        :set '(("C-k" . markdown-insert-link)
