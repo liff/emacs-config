@@ -674,6 +674,7 @@
                          ("M-," . move-dup-duplicate-down) ; TODO: duplicate-dwim and move down?
                          ("M-k" . ollijh/delete-whole-line)
                          ("M-j" . crux-top-join-line)
+                         ("M-u" . ollijh/toggle-case)
 
                          ;; Navigation
                          ("C-<tab>" . ollijh/switch-to-other-buffer)

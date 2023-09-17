@@ -1,12 +1,14 @@
 ;;; ollijh -- My utility functions &c.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+(require 's)
 (require 'cl-lib)
 (require 'simple)
 (require 'keymap)
 (require 'dbus)
 (require 'crux)
 (require 'better-jumper)
+(require 'expand-region)
 
 (defun ollijh/keymap-set-all (map bindings)
   "Add all BINDINGS to MAP."
@@ -242,5 +244,17 @@ Return `none', `light' or `dark'."
 		   (lambda (item) (<= (cdr item) (point-marker)))
 		   (seq-sort-by #'cdr #'< (consult-imenu--items)))))))
     (when marker (goto-char marker))))
+
+(defun ollijh/toggle-case ()
+  (interactive)
+  (save-excursion
+    (when (not (use-region-p))
+      (er/mark-symbol))
+    (let* ((beg (or (region-beginning) (point)))
+	   (end (or (region-end) (mark)))
+	   (content (buffer-substring beg end)))
+      (cond
+       ((s-lowercase-p content) (upcase-region beg end (region-noncontiguous-p)))
+       (t (downcase-region beg end (region-noncontiguous-p)))))))
 
 (provide 'ollijh)
