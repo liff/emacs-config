@@ -180,7 +180,6 @@
  '(c-ts-mode-indent-style 'linux)
  '(c-ts-mode-indent-offset 8))
 (add-hook 'c-ts-mode-hook #'eglot-ensure)
-(add-to-list 'eglot-server-programs `(c-ts-mode . ,(eglot-alternatives '(("ccls") ("clangd")))))
 ;;; python
 (add-hook 'python-mode-hook #'eglot-ensure)
 (add-hook 'python-ts-mode-hook #'eglot-ensure)
@@ -191,6 +190,9 @@
 (setq-default eglot-workspace-configuration
 	      '((:pylsp . (:plugins
 			   (:black (:enabled t :line_length 140))))))
+
+;;; yaml-ts-mode
+(add-hook 'yaml-ts-mode-hook #'eglot-ensure)
 
 ;;; rust-ts-mode
 (add-hook 'rust-ts-mode-hook #'eglot-ensure)
@@ -225,6 +227,7 @@
 (ollijh/keymap-rewrite smerge-mode-map
 		       :unset '("C-c")
 		       :set '())
+;;; windmove
 
 ;;; gsettings
 (when (gsettings-available?)
@@ -463,7 +466,6 @@
 
 ;;; markdown-mode
 (add-hook 'markdown-mode-hook #'eglot-ensure)
-(setf (alist-get 'markdown-mode eglot-server-programs) (list (f-join nixpkgs/marksman "bin/marksman") "server"))
 (ollijh/keymap-rewrite markdown-mode-map
                        :unset '("ESC" "C-c" "C-x")
                        :set '(("C-k" . markdown-insert-link)
@@ -522,7 +524,6 @@
 (keymap-set emacs-lisp-mode-map "M-o M-o" 'elisp-autofmt-buffer)
 
 ;;; nix-mode
-(add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
 (add-hook 'nix-mode-hook #'eglot-ensure)
 (add-hook 'nix-mode-hook
           (lambda ()
@@ -533,15 +534,16 @@
                                 (t "make -k "))))))
 
 ;;; nickel-mode
-(add-to-list 'eglot-server-programs '(nickel-mode . ("nls")))
 (add-hook 'nickel-mode-hook #'eglot-ensure)
+
+;;; yaml-mode
+(add-hook 'yaml-mode-hook #'eglot-ensure)
 
 ;;; hcl-mode
 (ollijh/keymap-rewrite hcl-mode-map
                        :unset '("ESC"))
 
 ;;; terraform-mode
-(add-to-list 'eglot-server-programs '(terraform-mode . ("terraform-ls" "serve")))
 (add-hook 'terraform-mode-hook #'eglot-ensure)
 (add-hook 'terraform-mode-hook (lambda () (setq-local compile-command "terraform plan")))
 (ollijh/keymap-rewrite terraform-mode-map
