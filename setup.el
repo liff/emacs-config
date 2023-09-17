@@ -444,6 +444,8 @@
  '(plantuml-java-command (f-join nixpkgs/openjdk "bin/java"))
  '(plantuml-jar-path (f-join nixpkgs/plantuml "lib/plantuml.jar")))
 
+;;; caser
+
 ;;; smartparens
 (add-hook 'prog-mode-hook #'smartparens-mode)
 (ollijh/keymap-rewrite smartparens-mode-map
@@ -675,6 +677,9 @@
                          ("M-k" . ollijh/delete-whole-line)
                          ("M-j" . crux-top-join-line)
                          ("M-u" . ollijh/toggle-case)
+			 ("M-U M-C" . caser-camelcase-dwim)
+			 ("M-U M-S" . caser-snakecase-dwim)
+			 ("M-U M-D" . caser-dashcase-dwim)
 
                          ;; Navigation
                          ("C-<tab>" . ollijh/switch-to-other-buffer)

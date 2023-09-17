@@ -178,6 +178,7 @@
           "adoc-mode"
 
           # Programming Assistance
+          "caser"
           {
             name = "smartparens";
             require = [ "smartparens-config" ];
@@ -230,7 +231,7 @@
             pname = "ollijh";
             version = "1";
             src = ./lisp;
-            buildInputs = with epkgs; [ crux better-jumper ];
+            buildInputs = with epkgs; [ s crux better-jumper expand-region ];
           };
 
         nixDependencies = with pkgs; ''
