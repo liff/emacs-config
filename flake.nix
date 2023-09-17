@@ -29,7 +29,7 @@
           };
 
           preFixup =
-            let servers = with pkgs; [
+            let tools = with pkgs; [
 			            rust-analyzer
 			            cmake-language-server
 			            vscode-langservers-extracted # JSON, CSS, HTML
@@ -45,10 +45,13 @@
 			            marksman
 			            dot-language-server
 			            terraform-ls
+
+			            yamllint
+			            hadolint
 		            ];
-	          in (prev.preFixup or "") + ''
-              gappsWrapperArgs+=(--prefix PATH : "${makeBinPath servers}")
-            '';
+            in (prev.preFixup or "") + ''
+                gappsWrapperArgs+=(--prefix PATH : "${makeBinPath tools}")
+              '';
 
           patches = (prev.patches or [ ]) ++ [
             (fetchpatch {
@@ -219,6 +222,9 @@
           "elisp-autofmt"
           "nix-mode"
           "nickel-mode"
+          "yaml-mode"
+          "flymake-yamllint"
+          "flymake-hadolint"
           "hcl-mode"
           "terraform-mode"
           "jq-mode"

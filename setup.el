@@ -541,6 +541,14 @@
 
 ;;; yaml-mode
 (add-hook 'yaml-mode-hook #'eglot-ensure)
+(setq-default eglot-workspace-configuration
+	      '((:yaml . (:format (:enable t)))))
+
+;;; flymake-yamllint
+(add-hook 'yaml-mode-hook 'flymake-yamllint-setup)
+
+;;; flymake-hadolint
+(add-hook 'dockerfile-ts-mode-hook 'flymake-hadolint-setup)
 
 ;;; hcl-mode
 (ollijh/keymap-rewrite hcl-mode-map
