@@ -184,10 +184,16 @@
 (add-hook 'c-ts-mode-hook #'eglot-ensure)
 (add-to-list 'eglot-server-programs `(c-ts-mode . ,(eglot-alternatives '(("ccls") ("clangd")))))
 ;;; python
+(add-hook 'python-mode-hook #'eglot-ensure)
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
 (ollijh/keymap-rewrite python-ts-mode-map
 		       :unset '("ESC" "C-c"))
 (ollijh/keymap-rewrite python-mode-map
 		       :unset '("ESC" "C-c"))
+(setq-default eglot-workspace-configuration
+	      '((:pylsp . (:plugins
+			   (:black (:enabled t :line_length 140))))))
+
 ;;; rust-ts-mode
 (add-hook 'rust-ts-mode-hook #'eglot-ensure)
 (add-hook 'rust-ts-mode-hook (lambda () (setq-local compile-command "cargo build")))
