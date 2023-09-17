@@ -19,7 +19,7 @@
           inherit system;
           overlays = [ emacs-overlay.overlays.default ];
         };
-        inherit (pkgs.lib) isDerivation fakeHash getBin;
+        inherit (pkgs.lib) isDerivation fakeHash getBin makeBinPath;
         inherit (pkgs) fetchpatch runCommand writeText;
 
         patchedEmacs = (pkgs.emacs-pgtk.overrideAttrs (prev: {
@@ -27,6 +27,28 @@
           passthru = prev.passthru // {
             treeSitter = true;
           };
+
+          preFixup =
+            let servers = with pkgs; [
+			            rust-analyzer
+			            cmake-language-server
+			            vscode-langservers-extracted # JSON, CSS, HTML
+			            nodePackages.typescript-language-server
+			            nodePackages.bash-language-server
+			            kotlin-language-server
+			            gopls
+			            metals
+			            yaml-language-server
+			            nil
+			            nls
+			            dockerfile-language-server-nodejs
+			            marksman
+			            dot-language-server
+			            terraform-ls
+		            ];
+	          in (prev.preFixup or "") + ''
+              gappsWrapperArgs+=(--prefix PATH : "${makeBinPath servers}")
+            '';
 
           patches = (prev.patches or [ ]) ++ [
             (fetchpatch {
@@ -246,26 +268,6 @@
           (defconst nixpkgs/grip "${python3Packages.grip}")
         '';
 
-        setLspServersPath = with pkgs; ''
-          (setq exec-path (append '(
-              "${getBin rust-analyzer}/bin"
-              "${getBin cmake-language-server}/bin"
-              "${getBin vscode-langservers-extracted}/bin" ; JSON, CSS, HTML
-              "${getBin nodePackages.typescript-language-server}/bin"
-              "${getBin nodePackages.bash-language-server}/bin"
-              "${getBin kotlin-language-server}/bin"
-              "${getBin gopls}/bin"
-              "${getBin metals}/bin"
-              "${getBin yaml-language-server}/bin"
-              "${getBin nil}/bin"
-              "${getBin nls}/bin"
-              "${getBin dockerfile-language-server-nodejs}/bin"
-              "${getBin marksman}/bin"
-              "${getBin dot-language-server}/bin"
-              "${getBin terraform-ls}/bin"
-            ) exec-path))
-        '';
-
         defaultEl = let
           bundled = concatStringsSep "\n" (map requireSexp bundledRequires);
           installed = concatStringsSep "\n" (map toRequire usedPackages);
@@ -278,7 +280,6 @@
             '(byte-compile-warnings '(not docstrings))
             '(warning-suppress-log-types '((comp) (bytecomp))))
           ${nixDependencies}
-          ${setLspServersPath}
 
           (setq edebug-inhibit-emacs-lisp-mode-bindings t)
           ${bundled}
