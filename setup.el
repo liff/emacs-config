@@ -266,6 +266,7 @@
 			      "\\*Pp Eval Output\\*$"
                               help-mode
                               helpful-mode
+			      apropos-mode
                               compilation-mode
 			      special-mode)))
 (popper-mode 1)
