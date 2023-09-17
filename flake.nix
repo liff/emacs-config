@@ -242,6 +242,7 @@
           (defconst nixpkgs/python3 "${python3}")
           (defconst nixpkgs/sqlite "${sqlite}")
           (defconst nixpkgs/grip "${python3Packages.grip}")
+          (defconst nixpkgs/marksman "${marksman}")
         '';
 
         defaultEl = let

@@ -456,12 +456,12 @@
 
 ;;; markdown-mode
 (add-hook 'markdown-mode-hook #'eglot-ensure)
+(setf (alist-get 'markdown-mode eglot-server-programs)
+      (eglot-alternatives (list (list (f-join nixpkgs/marksman "bin/marksman") "server"))))
 (ollijh/keymap-rewrite markdown-mode-map
                        :unset '("ESC" "C-c" "C-x")
                        :set '(("C-k" . markdown-insert-link)
 			      ("M-|" . markdown-fill-paragraph)
-			      ("C-<down>" . markdown-forward-block)
-			      ("C-<up>" . markdown-backward-block)
 			      ("M-o M-a" . markdown-table-align)
 			      ("<f2>" . eglot-rename)))
 
