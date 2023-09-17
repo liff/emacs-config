@@ -375,6 +375,8 @@
 			      ("M-<backspace>" . wgrep-remove-change)
 			      ("<escape>" . wgrep-exit)))
 
+;;; mw-thesaurus
+
 ;;; magit
 (ollijh/keymap-rewrite git-commit-mode-map
 		       :unset '("C-c")

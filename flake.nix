@@ -179,6 +179,7 @@
           "with-editor"
           "restclient"
           "wgrep"
+          "mw-thesaurus"
 
           # Version control
           "magit"
