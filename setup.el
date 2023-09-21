@@ -7,6 +7,7 @@
  '(indicate-empty-lines t)
  '(inhibit-startup-screen t)
  '(initial-scratch-message "")
+ '(indent-tabs-mode nil)
  ;;'(pixel-scroll-precision-mode t)
  '(redisplay-skip-fontification-on-input t)
  '(scroll-step 1)
@@ -223,6 +224,11 @@
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
 (keymap-set eglot-mode-map "<f2>" #'eglot-rename)
 (keymap-set eglot-mode-map "M-o M-o" #'eglot-format-buffer)
+(setq-default eglot-workspace-configuration
+	      '((:pylsp . (:plugins
+			   (:black (:enabled t :line_length 140))))
+		(:yaml . (:format (:enable t)))))
+
 ;;; smerge-mode
 (ollijh/keymap-rewrite smerge-mode-map
 		       :unset '("C-c")
@@ -362,9 +368,12 @@
 ;;; restclient
 (ollijh/keymap-rewrite restclient-mode-map
                        :unset '("C-c")
-                       :set '(("C-<return>" . restclient-send-current)
+                       :set '(("C-<return>" . restclient-http-send-current)
                               ("C-<up>" . restclient-jump-prev)
                               ("C-<down>" . restclient-jump-next)))
+(ollijh/keymap-rewrite restclient-outline-mode-map
+		       :unset '("C-c"))
+(add-to-list 'auto-mode-alist '("\\.http$" . restclient-mode))
 
 ;;; wgrep
 (custom-set-variables '(wgrep-enable-key "e"))
@@ -541,8 +550,6 @@
 
 ;;; yaml-mode
 (add-hook 'yaml-mode-hook #'eglot-ensure)
-(setq-default eglot-workspace-configuration
-	      '((:yaml . (:format (:enable t)))))
 
 ;;; flymake-yamllint
 (add-hook 'yaml-mode-hook 'flymake-yamllint-setup)
