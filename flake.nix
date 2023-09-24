@@ -350,11 +350,11 @@
         apps = { default = app; };
       });
 
-        overlay = final: prev: { emacs = perSystem.packages.${final.system}.emacs; };
+        overlay = final: prev: { emacs = perSystem.packages.${final.system}.default; };
     in
       perSystem // {
         overlays.default = overlay;
-        nixosModules.default = { config }: {
+        nixosModules.default = {
           config.nixpkgs.overlays = [ overlay ];
         };
       };
