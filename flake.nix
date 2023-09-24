@@ -11,7 +11,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, emacs-overlay }:
-    flake-utils.lib.eachDefaultSystem (system:
+    let perSystem = flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (builtins)
           attrValues concatStringsSep filter getAttr map isString readFile;
@@ -349,4 +349,13 @@
         packages = { default = finalEmacs; };
         apps = { default = app; };
       });
+
+        overlay = final: prev: { emacs = perSystem.packages.${final.system}.emacs; };
+    in
+      perSystem // {
+        overlays.default = overlay;
+        nixosModules.default = { config }: {
+          nixpkgs.overlays = [ overlay ];
+        };
+      };
 }
