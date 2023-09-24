@@ -174,6 +174,16 @@
 (ollijh/keymap-rewrite sql-mode-map
 		       :unset '("C-c")
 		       :set '(("C-<return>" . sql-send-paragraph)))
+;;; c-mode
+(ollijh/keymap-rewrite c-mode-base-map
+		       :unset '("C-c" "ESC" "C-d"))
+(ollijh/keymap-rewrite c-mode-map
+                       :unset '("C-c"))
+(define-key c-mode-base-map [remap delete-forward-char] 'c-electric-delete-forward)
+(custom-set-variables '(c-default-style '((java-mode . "java")
+					 (awk-mode . "awk")
+					 (other . "linux"))))
+(add-hook 'c-mode-hook #'eglot-ensure)
 ;;; c-ts-mode
 (ollijh/keymap-rewrite c-ts-base-mode-map
                        :unset '("C-c"))
@@ -338,6 +348,7 @@
 (custom-set-variables
  '(consult-line-start-from-top t))
 (keymap-set prog-mode-map "M-p M-s" #'consult-imenu)
+(keymap-set prog-mode-map "C-'" #'next-error)
 
 ;;; vertico
 (vertico-mode 1)
