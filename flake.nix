@@ -355,7 +355,7 @@
       perSystem // {
         overlays.default = overlay;
         nixosModules.default = { config }: {
-          nixpkgs.overlays = [ overlay ];
+          config.nixpkgs.overlays = [ overlay ];
         };
       };
 }
