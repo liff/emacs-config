@@ -408,6 +408,8 @@
                        :set '(("C-<down>" . magit-section-forward) ("C-<up>" . magit-section-backward)))
 (ollijh/keymap-rewrite magit-diff-section-map
 		       :unset '("C-x" "C-c"))
+(ollijh/keymap-rewrite magit-revision-mode-map
+                       :unset '("C-x" "C-c"))
 (ollijh/keymap-rewrite magit-mode-map
                        :unset '("TAB" "C-w" "C-c" "C-M-i" "<" ">" "DEL" "S-SPC" "M-w" "C-<return>" "C-<tab>" "M-<tab>" "<backtab>" "ESC")
                        :set '(("<right>" . magit-section-show)
