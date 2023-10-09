@@ -14,7 +14,7 @@
     let perSystem = flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (builtins)
-          attrValues concatStringsSep filter getAttr map isString readFile;
+          attrValues concatStringsSep filter getAttr map isString readFile removeAttrs;
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ emacs-overlay.overlays.default ];
@@ -40,7 +40,7 @@
 			            metals
 			            yaml-language-server
 			            nil
-			            nls
+			            #nls
 			            dockerfile-language-server-nodejs
 			            marksman
 			            dot-language-server
@@ -337,7 +337,7 @@
         emacsWithPackages = emacsPackages.emacsWithPackages;
         finalEmacs = emacsWithPackages (epkgs:
           [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
-          ++ [ epkgs.treesit-grammars.with-all-grammars ]
+          ++ [ (epkgs.treesit-grammars.with-grammars (p: attrValues (removeAttrs p ["tree-sitter-typst"]) )) ]
           ++ map (use: toEpkg use epkgs) usedPackages);
 
         app = {
