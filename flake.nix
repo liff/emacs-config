@@ -129,6 +129,7 @@
           "html-ts-mode"
           "toml-ts-mode"
           "yaml-ts-mode"
+          "typescript-ts-mode"
           "conf-mode"
           "sh-script"
           "js"

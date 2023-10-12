@@ -119,15 +119,16 @@
 (kill-ring-deindent-mode 1)
 ;;; treesit
 (custom-set-variables
- '(major-mode-remap-alist '((c-mode          . c-ts-mode)
-                            (c++-mode        . c++-ts-mode)
-                            (cmake-mode      . cmake-ts-mode)
-                            (conf-toml-mode  . toml-ts-mode)
-                            (css-mode        . css-ts-mode)
-                            (js-mode         . js-ts-mode)
-                            (js-json-mode    . json-ts-mode)
-                            (python-mode     . python-ts-mode)
-                            (sh-mode         . bash-ts-mode)
+ '(major-mode-remap-alist '(
+                            ;;(c-mode          . c-ts-mode)
+                            ;;(c++-mode        . c++-ts-mode)
+                            ;;(cmake-mode      . cmake-ts-mode)
+                            ;;(conf-toml-mode  . toml-ts-mode)
+                            ;;(css-mode        . css-ts-mode)
+                            ;;(js-mode         . js-ts-mode)
+                            ;;(js-json-mode    . json-ts-mode)
+                            ;;(python-mode     . python-ts-mode)
+                            ;;(sh-mode         . bash-ts-mode)
                             (typescript-mode . typescript-ts-mode))))
 ;;; tramp
 (custom-set-variables '(tramp-default-method 'ssh))
