@@ -226,6 +226,7 @@
           "yaml-mode"
           "flymake-yamllint"
           "flymake-hadolint"
+          "nushell-ts-mode"
           "hcl-mode"
           "terraform-mode"
           "jq-mode"
@@ -333,12 +334,25 @@
           });
         };
 
+        selectGrammars = all:
+          let excluded = removeAttrs all ["tree-sitter-typst"];
+              officialNu = all.tree-sitter-nu.overrideAttrs (old: {
+                src = pkgs.fetchFromGitHub {
+                  owner = "nushell";
+                  repo = "tree-sitter-nu";
+                  rev = "307559b6a3885ef0c55bcd5e23e9e164a7ce03bd";
+                  hash = "sha256-RuvR2Yb2CTxpxyXgr+2uUQa9N75sIhYlS9moyedZo8A=";
+                };
+              });
+              desired = excluded // { tree-sitter-nu = officialNu; };
+          in attrValues desired;
+
         emacsPackages =
           (pkgs.emacsPackagesFor patchedEmacs).overrideScope' epkgOverrides;
         emacsWithPackages = emacsPackages.emacsWithPackages;
         finalEmacs = emacsWithPackages (epkgs:
           [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
-          ++ [ (epkgs.treesit-grammars.with-grammars (p: attrValues (removeAttrs p ["tree-sitter-typst"]) )) ]
+          ++ [ (epkgs.treesit-grammars.with-grammars selectGrammars) ]
           ++ map (use: toEpkg use epkgs) usedPackages);
 
         app = {
