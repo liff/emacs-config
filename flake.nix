@@ -30,21 +30,22 @@
 
           preFixup =
             let tools = with pkgs; [
-			            rust-analyzer
 			            cmake-language-server
-			            vscode-langservers-extracted # JSON, CSS, HTML
-			            nodePackages.typescript-language-server
-			            nodePackages.bash-language-server
-			            kotlin-language-server
-			            gopls
-			            metals
-			            yaml-language-server
-			            nil
-			            #nls
 			            dockerfile-language-server-nodejs
-			            marksman
 			            dot-language-server
+			            gopls
+			            kotlin-language-server
+			            marksman
+			            metals
+			            nil
+			            nls
+			            nodePackages.bash-language-server
+			            nodePackages.typescript-language-server
+			            rust-analyzer
 			            terraform-ls
+			            vscode-langservers-extracted # JSON, CSS, HTML
+			            yaml-language-server
+                  python3Packages.python-lsp-server
 
 			            yamllint
 			            hadolint
