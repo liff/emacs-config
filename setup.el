@@ -211,6 +211,7 @@
 (add-hook 'rust-ts-mode-hook (lambda () (setq-local compile-command "cargo build")))
 ;;; typescript-ts-mode
 (add-hook 'typescript-ts-mode-hook #'eglot-ensure)
+(add-hook 'tsx-ts-mode #'eglot-ensure)
 ;;; conf-mode
 (ollijh/keymap-rewrite conf-mode-map
                        :unset '("C-c"))
