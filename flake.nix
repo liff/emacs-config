@@ -292,6 +292,7 @@
           ${nixDependencies}
 
           (setq edebug-inhibit-emacs-lisp-mode-bindings t)
+          (setq smerge-command-prefix "M-m")
           ${bundled}
 
           (require 'f)
