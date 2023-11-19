@@ -244,6 +244,7 @@
 		(:yaml . (:format (:enable t)))))
 
 ;;; smerge-mode
+(custom-set-variables '(smerge-command-prefix "M-m"))
 (ollijh/keymap-rewrite smerge-mode-map
 		       :unset '("C-c")
 		       :set '())
