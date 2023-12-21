@@ -599,6 +599,10 @@
 (ollijh/keymap-rewrite kotlin-mode-map
                        :unset '("C-c"))
 
+;;; csv-mode
+(ollijh/keymap-rewrite csv-mode-map :unset '("C-c"))
+(add-hook 'csv-mode-hook 'csv-guess-set-separator)
+
 ;;; himalaya
 
 ;;; kind-icon
