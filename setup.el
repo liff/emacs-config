@@ -101,7 +101,8 @@
 (custom-set-variables '(display-line-numbers-type 'relative))
 ;;; ispell
 (custom-set-variables
- '(ispell-program-name (f-join nixpkgs/aspell "bin/aspell")))
+ '(ispell-program-name (f-join nixpkgs/aspell "bin/aspell"))
+ '(ispell-alternate-dictionary (getenv "WORDLIST")))
 ;;; project
 (custom-set-variables '(project-list-file (f-join user-state-directory "projects")))
 ;;; multisession
