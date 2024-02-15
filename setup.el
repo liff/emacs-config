@@ -1,4 +1,5 @@
 ;;; startup/C source
+(setq read-process-output-max (* 4 1024 1024)) ;; 1mb
 (custom-set-variables
  '(auto-save-list-file-prefix (f-join user-state-directory "auto-save-list/saves-"))
  '(create-lockfiles nil)
