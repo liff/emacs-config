@@ -314,17 +314,20 @@
  '(better-jumper-context 'window)
  '(better-jumper-use-evil-jump-advice nil)
  '(better-jumper-add-jump-behavior 'replace))
-(better-jumper-mode +1)
-(add-hook 'after-init-hook
-          (lambda ()
-            (advice-add 'switch-to-buffer :around #'ollijh/set-jump-maybe)
-            (advice-add 'beginning-of-buffer :around #'ollijh/set-jump-maybe)
-            (advice-add 'end-of-buffer :around #'ollijh/set-jump-maybe)
-            (advice-add 'xref-find-definitions :around #'ollijh/set-jump-maybe)
-            (advice-add 'search-forward :around #'ollijh/set-jump-maybe)
-            (advice-add 'search-backward :around #'ollijh/set-jump-maybe)
-            (advice-add 'consult-line :around #'ollijh/set-jump-if-moved))
-          100)
+;; (better-jumper-mode +1)
+;; (add-hook 'after-init-hook
+;;           (lambda ()
+;;             (advice-add 'switch-to-buffer :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'beginning-of-buffer :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'end-of-buffer :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'xref-find-definitions :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'search-forward :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'search-backward :around #'ollijh/set-jump-maybe)
+;;             (advice-add 'consult-line :around #'ollijh/set-jump-if-moved))
+;;           100)
+
+;;; dogears
+(dogears-mode 1)
 
 ;;; helpful
 (ollijh/keymap-rewrite helpful-mode-map
@@ -734,8 +737,10 @@
                          ("C-<f4>" . kill-current-buffer)
                          ("C-<prior>" . previous-buffer)
                          ("C-<next>" . next-buffer)
-                         ("M-<left>" . better-jumper-jump-backward)
-                         ("M-<right>" . better-jumper-jump-forward)
+                         ;;("M-<left>" . better-jumper-jump-backward)
+                         ;;("M-<right>" . better-jumper-jump-forward)
+                         ("M-<left>" . dogears-back)
+                         ("M-<right>" . dogears-forward)
                          ("M-l" . avy-goto-char)
                          ("M-g M-b" . browse-url-at-point)
                          ("C-<mouse-1>" . browse-url-at-mouse)

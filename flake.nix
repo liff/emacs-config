@@ -168,6 +168,7 @@
           "crux"
           "move-dup"
           "better-jumper"
+          "dogears"
           "goto-chg" # TODO
           "helpful"
           {
