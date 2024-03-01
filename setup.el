@@ -607,9 +607,25 @@
 ;;; csv-mode
 (ollijh/keymap-rewrite csv-mode-map :unset '("C-c"))
 (add-hook 'csv-mode-hook 'csv-guess-set-separator)
+
+;;; caml
+(ollijh/keymap-rewrite caml-mode-map :unset '("C-c" "C-x"))
+
+;;; ocaml-ts-mode
+
 ;;; reason-mode
 (ollijh/keymap-rewrite reason-mode-map :unset '("C-c"))
 (add-hook 'reason-mode-hook #'eglot-ensure)
+
+;;; merlin
+(add-hook 'caml-mode-hook #'merlin-mode)
+(ollijh/keymap-rewrite merlin-mode-map :unset '("C-c"))
+
+;;; merlin-eldoc
+(add-hook 'reason-mode-hook 'merlin-eldoc-setup)
+
+;;; dune
+(ollijh/keymap-rewrite dune-mode-map :unset '("C-c"))
 
 ;;; himalaya
 

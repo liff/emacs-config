@@ -236,7 +236,12 @@
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
           "csv-mode"
+          "caml"
+          "ocaml-ts-mode"
           "reason-mode"
+          "merlin"
+          "merlin-eldoc"
+          "dune"
 
           # Tools
           "himalaya"
