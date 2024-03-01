@@ -236,6 +236,7 @@
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
           "csv-mode"
+          "reason-mode"
 
           # Tools
           "himalaya"
