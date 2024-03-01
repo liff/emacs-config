@@ -353,7 +353,7 @@
           in attrValues desired;
 
         emacsPackages =
-          (pkgs.emacsPackagesFor patchedEmacs).overrideScope' epkgOverrides;
+          (pkgs.emacsPackagesFor patchedEmacs).overrideScope epkgOverrides;
         emacsWithPackages = emacsPackages.emacsWithPackages;
         finalEmacs = emacsWithPackages (epkgs:
           [ defaultElAsPackage ] ++ [ (ollijh epkgs) ]
