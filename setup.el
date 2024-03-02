@@ -608,10 +608,9 @@
 (ollijh/keymap-rewrite csv-mode-map :unset '("C-c"))
 (add-hook 'csv-mode-hook 'csv-guess-set-separator)
 
-;;; caml
-(ollijh/keymap-rewrite caml-mode-map :unset '("C-c" "C-x"))
-
-;;; ocaml-ts-mode
+;;; tuareg
+(add-hook 'tuareg-mode-hook #'eglot-ensure)
+(ollijh/keymap-rewrite tuareg-mode-map :unset '("C-c" "C-x" "C-h" "ESC"))
 
 ;;; reason-mode
 (ollijh/keymap-rewrite reason-mode-map :unset '("C-c"))

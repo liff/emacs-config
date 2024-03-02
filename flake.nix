@@ -236,8 +236,7 @@
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
           "csv-mode"
-          "caml"
-          "ocaml-ts-mode"
+          "tuareg"
           "reason-mode"
           "merlin"
           "merlin-eldoc"
