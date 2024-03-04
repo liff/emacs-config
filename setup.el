@@ -237,6 +237,7 @@
                               ("M-. M-y" . winner-redo)))
 (winner-mode 1)
 ;;; eglot
+(custom-set-variables '(eglot-extend-to-xref t))
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
 (keymap-set eglot-mode-map "<f2>" #'eglot-rename)
 (keymap-set eglot-mode-map "M-o M-o" #'eglot-format-buffer)
@@ -603,6 +604,9 @@
 (add-hook 'kotlin-mode-hook (lambda () (setq-local compile-command "gradle build")))
 (ollijh/keymap-rewrite kotlin-mode-map
                        :unset '("C-c"))
+
+;;; jarchive
+(jarchive-mode)
 
 ;;; csv-mode
 (ollijh/keymap-rewrite csv-mode-map :unset '("C-c"))

@@ -235,6 +235,7 @@
           #"protobuf-ts-mode"
           "haskell-mode"
           "kotlin-mode" # TODO: replace with kotlin-ts-mode
+          "jarchive"
           "csv-mode"
           "tuareg"
           "reason-mode"
