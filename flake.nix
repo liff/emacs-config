@@ -30,26 +30,28 @@
 
           preFixup =
             let tools = with pkgs; [
-			            cmake-language-server
-			            dockerfile-language-server-nodejs
-			            dot-language-server
-			            gopls
-			            kotlin-language-server
-			            marksman
-			            metals
-			            nil
-			            nls
-			            nodePackages.bash-language-server
-			            nodePackages.typescript-language-server
-			            rust-analyzer
-			            terraform-ls
-			            vscode-langservers-extracted # JSON, CSS, HTML
-			            yaml-language-server
+                  perl
+
+                  cmake-language-server
+                  dockerfile-language-server-nodejs
+                  dot-language-server
+                  gopls
+                  kotlin-language-server
+                  marksman
+                  metals
+                  nil
+                  nls
+                  nodePackages.bash-language-server
+                  nodePackages.typescript-language-server
+                  rust-analyzer
+                  terraform-ls
+                  vscode-langservers-extracted # JSON, CSS, HTML
+                  yaml-language-server
                   python3Packages.python-lsp-server
 
-			            yamllint
-			            hadolint
-		            ];
+                  yamllint
+                  hadolint
+                ];
             in (prev.preFixup or "") + ''
                 gappsWrapperArgs+=(--prefix PATH : "${makeBinPath tools}")
               '';
