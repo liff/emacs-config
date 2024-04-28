@@ -331,6 +331,13 @@
 
         epkgOverrides = final: prev: {
           smartparens = prev.smartparens.overrideAttrs (old: {
+            # work around https://github.com/nix-community/emacs-overlay/issues/391
+            src = pkgs.fetchFromGitHub {
+              owner = "Fuco1";
+              repo = "smartparens";
+              hash = "sha256-ldt0O9nQP3RSsEvF5+irx6SRt2GVWbIao4IOO7lOexM=";
+              rev = "d3b616843167f04b8a9f53dd25e84818c9f6fbce";
+            };
             patches = (old.patches or []) ++ [
               ./patches/smartparens/0001-Add-support-for-tree-sitter-modes.patch
             ];
