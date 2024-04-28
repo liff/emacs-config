@@ -408,6 +408,8 @@
 
 ;;; mw-thesaurus
 
+;;; ellama
+
 ;;; magit
 (ollijh/keymap-rewrite git-commit-mode-map
 		       :unset '("C-c")

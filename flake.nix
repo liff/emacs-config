@@ -188,6 +188,7 @@
           "restclient"
           "wgrep"
           "mw-thesaurus"
+          "ellama"
 
           # Version control
           "magit"
