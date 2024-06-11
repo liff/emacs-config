@@ -39,7 +39,7 @@
                   kotlin-language-server
                   marksman
                   metals
-                  nil
+                  nixd
                   nls
                   nodePackages.bash-language-server
                   nodePackages.typescript-language-server
