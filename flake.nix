@@ -41,7 +41,7 @@
                   metals
                   nixd
                   nls
-                  nodePackages.bash-language-server
+                  bash-language-server
                   nodePackages.typescript-language-server
                   rust-analyzer
                   terraform-ls
