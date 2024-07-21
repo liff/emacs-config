@@ -10,6 +10,7 @@
  '(initial-scratch-message "")
  '(indent-tabs-mode nil)
  ;;'(pixel-scroll-precision-mode t)
+ '(native-comp-async-report-warnings-errors 'silent)
  '(redisplay-skip-fontification-on-input t)
  '(scroll-step 1)
  '(show-trailing-whitespace t)
