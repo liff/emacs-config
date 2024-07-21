@@ -246,6 +246,7 @@
           "merlin"
           "merlin-eldoc"
           "dune"
+          "bpftrace-mode"
 
           # Tools
           "himalaya"
