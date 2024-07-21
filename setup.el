@@ -611,6 +611,12 @@
 ;;; jarchive
 (jarchive-mode)
 
+;;; rust-mode
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(add-hook 'rust-mode-hook #'eglot-ensure)
+(ollijh/keymap-rewrite rust-mode-map
+		       :unset '("C-c"))
+
 ;;; csv-mode
 (ollijh/keymap-rewrite csv-mode-map :unset '("C-c"))
 (add-hook 'csv-mode-hook 'csv-guess-set-separator)
