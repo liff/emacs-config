@@ -845,3 +845,6 @@
 
 ;;; envrc
 (envrc-global-mode) ;; Must be as late as possible
+
+;;; cleanup
+(native-compile-prune-cache)
